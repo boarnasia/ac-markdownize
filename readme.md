@@ -48,14 +48,14 @@ BBT大学とBBT大学院の AirCampus の投稿欄にマークダウンを綺麗
 改造の仕方
 ----------
 
-Git clone して npm run gulp すると release/index.user.js が生成されるので、それをコピペして使用してください。
+clone して npm run gulp すると release/index.user.js が生成されるので、それをコピペして使用してください。
 
 手順はこんな感じ:
 
 ```bash
 $ cd ${working dir}
 $ git clone git@github.com:boarnasia/ac-markdownize.git
-$ cd ac-Markdownize
+$ cd ac-markdownize
 $ npm install
 $ npm run gulp
 ```
