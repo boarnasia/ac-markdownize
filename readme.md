@@ -24,11 +24,11 @@ BBT大学とBBT大学院の AirCampus の投稿欄にマークダウンを綺麗
 インストール方法
 ----------------
 
-[Tempermonkey][tm] をインストールした後、↓の URL を開くとインストール画面が表示されるので、支持に従ってインストールして下さい。
+[Tempermonkey][tm] をインストールした後、↓の URL を開くとインストール画面が表示されるので、指示に従ってインストールして下さい。
 
 - https://github.com/boarnasia/ac-markdownize/raw/master/release/index.user.js
 
-![Install](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/example2.png)
+![Install](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/install.png)
 
 動く環境
 --------
@@ -60,7 +60,7 @@ $ npm install
 $ npm run gulp
 ```
 
-修正履歴
+更新履歴
 --------
 
 * 2017-07-13 Ver 1.0.2
