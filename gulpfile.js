@@ -14,8 +14,8 @@ const paths = {
     dest: `${pj_path}/css/build/index.css`,
   },
   js: {
-    src: `${pj_path}/js/source/index.js`,
-    dest: `${pj_path}/release/index.js`,
+    src: `${pj_path}/js/source/index.user.js`,
+    dest: `${pj_path}/release/index.user.js`,
   }
 }
 
