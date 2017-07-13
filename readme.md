@@ -21,16 +21,14 @@ BBT大学とBBT大学院の AirCampus の投稿欄にマークダウンを綺麗
 
 ![Example 2](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/example2.png)
 
-使い方
-------
+インストール方法
+----------------
 
-[Tempermonkey][tm] のダッシュボード＞新規スクリプト画面を開き、↓のURLを更新 URLに指定して保存すればOK。
+[Tempermonkey][tm] をインストールした後、↓の URL を開くとインストール画面が表示されるので、支持に従ってインストールして下さい。
 
-- https://github.com/boarnasia/ac-markdownize/raw/master/release/index.js
+- https://github.com/boarnasia/ac-markdownize/raw/master/release/index.user.js
 
-![手順1](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/tm-dashboard.png)
-
-![手順2](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/tm-new_script.png)
+![Install](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/example2.png)
 
 動く環境
 --------
@@ -50,7 +48,7 @@ BBT大学とBBT大学院の AirCampus の投稿欄にマークダウンを綺麗
 改造の仕方
 ----------
 
-Git clone して npm run gulp すると release/index.js が生成されるので、それをコピペして使用してください。
+Git clone して npm run gulp すると release/index.user.js が生成されるので、それをコピペして使用してください。
 
 手順はこんな感じ:
 
@@ -65,7 +63,7 @@ $ npm run gulp
 修正履歴
 --------
 
-* 2017-07-13
-  最初のリリース
+* 2017-07-13 Ver 1.0.2
+  * 最初のリリース
 
 [tm]: http://tampermonkey.net/
