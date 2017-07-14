@@ -32,103 +32,26 @@ $(function() {
   /* テーマ設定
    * テーマは他のデザインと干渉しないように特定の領域以下にだけ適用されるように作ってます。 */
   const theme = `@charset "UTF-8";
-#markdownize-popup,
 #forum_message_body > .message-content {
+  /* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+  */
+  /* This css is slightly adjusted from original by boarnasia.  */
   /* HTML5 display-role reset for older browsers */ }
-  #markdownize-popup html, #markdownize-popup body, #markdownize-popup div, #markdownize-popup span, #markdownize-popup applet, #markdownize-popup object, #markdownize-popup iframe,
-  #markdownize-popup h1, #markdownize-popup h2, #markdownize-popup h3, #markdownize-popup h4, #markdownize-popup h5, #markdownize-popup h6, #markdownize-popup p, #markdownize-popup blockquote, #markdownize-popup pre,
-  #markdownize-popup a, #markdownize-popup abbr, #markdownize-popup acronym, #markdownize-popup address, #markdownize-popup big, #markdownize-popup cite, #markdownize-popup code,
-  #markdownize-popup del, #markdownize-popup dfn, #markdownize-popup em, #markdownize-popup img, #markdownize-popup ins, #markdownize-popup kbd, #markdownize-popup q, #markdownize-popup s, #markdownize-popup samp,
-  #markdownize-popup small, #markdownize-popup strike, #markdownize-popup strong, #markdownize-popup sub, #markdownize-popup sup, #markdownize-popup tt, #markdownize-popup var,
-  #markdownize-popup b, #markdownize-popup u, #markdownize-popup i, #markdownize-popup center,
-  #markdownize-popup dl, #markdownize-popup dt, #markdownize-popup dd, #markdownize-popup ol, #markdownize-popup ul, #markdownize-popup li,
-  #markdownize-popup fieldset, #markdownize-popup form, #markdownize-popup label, #markdownize-popup legend,
-  #markdownize-popup table, #markdownize-popup caption, #markdownize-popup tbody, #markdownize-popup tfoot, #markdownize-popup thead, #markdownize-popup tr, #markdownize-popup th, #markdownize-popup td,
-  #markdownize-popup article, #markdownize-popup aside, #markdownize-popup canvas, #markdownize-popup details, #markdownize-popup embed,
-  #markdownize-popup figure, #markdownize-popup figcaption, #markdownize-popup footer, #markdownize-popup header, #markdownize-popup hgroup,
-  #markdownize-popup menu, #markdownize-popup nav, #markdownize-popup output, #markdownize-popup ruby, #markdownize-popup section, #markdownize-popup summary,
-  #markdownize-popup time, #markdownize-popup mark, #markdownize-popup audio, #markdownize-popup video,
-  #forum_message_body > .message-content html,
-  #forum_message_body > .message-content body,
-  #forum_message_body > .message-content div,
-  #forum_message_body > .message-content span,
-  #forum_message_body > .message-content applet,
-  #forum_message_body > .message-content object,
-  #forum_message_body > .message-content iframe,
-  #forum_message_body > .message-content h1,
-  #forum_message_body > .message-content h2,
-  #forum_message_body > .message-content h3,
-  #forum_message_body > .message-content h4,
-  #forum_message_body > .message-content h5,
-  #forum_message_body > .message-content h6,
-  #forum_message_body > .message-content p,
-  #forum_message_body > .message-content blockquote,
-  #forum_message_body > .message-content pre,
-  #forum_message_body > .message-content a,
-  #forum_message_body > .message-content abbr,
-  #forum_message_body > .message-content acronym,
-  #forum_message_body > .message-content address,
-  #forum_message_body > .message-content big,
-  #forum_message_body > .message-content cite,
-  #forum_message_body > .message-content code,
-  #forum_message_body > .message-content del,
-  #forum_message_body > .message-content dfn,
-  #forum_message_body > .message-content em,
-  #forum_message_body > .message-content img,
-  #forum_message_body > .message-content ins,
-  #forum_message_body > .message-content kbd,
-  #forum_message_body > .message-content q,
-  #forum_message_body > .message-content s,
-  #forum_message_body > .message-content samp,
-  #forum_message_body > .message-content small,
-  #forum_message_body > .message-content strike,
-  #forum_message_body > .message-content strong,
-  #forum_message_body > .message-content sub,
-  #forum_message_body > .message-content sup,
-  #forum_message_body > .message-content tt,
-  #forum_message_body > .message-content var,
-  #forum_message_body > .message-content b,
-  #forum_message_body > .message-content u,
-  #forum_message_body > .message-content i,
-  #forum_message_body > .message-content center,
-  #forum_message_body > .message-content dl,
-  #forum_message_body > .message-content dt,
-  #forum_message_body > .message-content dd,
-  #forum_message_body > .message-content ol,
-  #forum_message_body > .message-content ul,
-  #forum_message_body > .message-content li,
-  #forum_message_body > .message-content fieldset,
-  #forum_message_body > .message-content form,
-  #forum_message_body > .message-content label,
-  #forum_message_body > .message-content legend,
-  #forum_message_body > .message-content table,
-  #forum_message_body > .message-content caption,
-  #forum_message_body > .message-content tbody,
-  #forum_message_body > .message-content tfoot,
-  #forum_message_body > .message-content thead,
-  #forum_message_body > .message-content tr,
-  #forum_message_body > .message-content th,
-  #forum_message_body > .message-content td,
-  #forum_message_body > .message-content article,
-  #forum_message_body > .message-content aside,
-  #forum_message_body > .message-content canvas,
-  #forum_message_body > .message-content details,
-  #forum_message_body > .message-content embed,
-  #forum_message_body > .message-content figure,
-  #forum_message_body > .message-content figcaption,
-  #forum_message_body > .message-content footer,
-  #forum_message_body > .message-content header,
-  #forum_message_body > .message-content hgroup,
-  #forum_message_body > .message-content menu,
-  #forum_message_body > .message-content nav,
-  #forum_message_body > .message-content output,
-  #forum_message_body > .message-content ruby,
-  #forum_message_body > .message-content section,
-  #forum_message_body > .message-content summary,
-  #forum_message_body > .message-content time,
-  #forum_message_body > .message-content mark,
-  #forum_message_body > .message-content audio,
-  #forum_message_body > .message-content video {
+  #forum_message_body > .message-content html, #forum_message_body > .message-content body, #forum_message_body > .message-content div, #forum_message_body > .message-content span, #forum_message_body > .message-content applet, #forum_message_body > .message-content object, #forum_message_body > .message-content iframe,
+  #forum_message_body > .message-content h1, #forum_message_body > .message-content h2, #forum_message_body > .message-content h3, #forum_message_body > .message-content h4, #forum_message_body > .message-content h5, #forum_message_body > .message-content h6, #forum_message_body > .message-content p, #forum_message_body > .message-content blockquote, #forum_message_body > .message-content pre,
+  #forum_message_body > .message-content a, #forum_message_body > .message-content abbr, #forum_message_body > .message-content acronym, #forum_message_body > .message-content address, #forum_message_body > .message-content big, #forum_message_body > .message-content cite, #forum_message_body > .message-content code,
+  #forum_message_body > .message-content del, #forum_message_body > .message-content dfn, #forum_message_body > .message-content em, #forum_message_body > .message-content img, #forum_message_body > .message-content ins, #forum_message_body > .message-content kbd, #forum_message_body > .message-content q, #forum_message_body > .message-content s, #forum_message_body > .message-content samp,
+  #forum_message_body > .message-content small, #forum_message_body > .message-content strike, #forum_message_body > .message-content strong, #forum_message_body > .message-content sub, #forum_message_body > .message-content sup, #forum_message_body > .message-content tt, #forum_message_body > .message-content var,
+  #forum_message_body > .message-content b, #forum_message_body > .message-content u, #forum_message_body > .message-content i, #forum_message_body > .message-content center,
+  #forum_message_body > .message-content dl, #forum_message_body > .message-content dt, #forum_message_body > .message-content dd, #forum_message_body > .message-content ol, #forum_message_body > .message-content ul, #forum_message_body > .message-content li,
+  #forum_message_body > .message-content fieldset, #forum_message_body > .message-content form, #forum_message_body > .message-content label, #forum_message_body > .message-content legend,
+  #forum_message_body > .message-content table, #forum_message_body > .message-content caption, #forum_message_body > .message-content tbody, #forum_message_body > .message-content tfoot, #forum_message_body > .message-content thead, #forum_message_body > .message-content tr, #forum_message_body > .message-content th, #forum_message_body > .message-content td,
+  #forum_message_body > .message-content article, #forum_message_body > .message-content aside, #forum_message_body > .message-content canvas, #forum_message_body > .message-content details, #forum_message_body > .message-content embed,
+  #forum_message_body > .message-content figure, #forum_message_body > .message-content figcaption, #forum_message_body > .message-content footer, #forum_message_body > .message-content header, #forum_message_body > .message-content hgroup,
+  #forum_message_body > .message-content menu, #forum_message_body > .message-content nav, #forum_message_body > .message-content output, #forum_message_body > .message-content ruby, #forum_message_body > .message-content section, #forum_message_body > .message-content summary,
+  #forum_message_body > .message-content time, #forum_message_body > .message-content mark, #forum_message_body > .message-content audio, #forum_message_body > .message-content video {
     margin: 0;
     padding: 0;
     border: 0;
@@ -136,40 +59,19 @@ $(function() {
     font: inherit;
     vertical-align: baseline;
     float: none; }
-  #markdownize-popup article, #markdownize-popup aside, #markdownize-popup details, #markdownize-popup figcaption, #markdownize-popup figure,
-  #markdownize-popup footer, #markdownize-popup header, #markdownize-popup hgroup, #markdownize-popup menu, #markdownize-popup nav, #markdownize-popup section,
-  #forum_message_body > .message-content article,
-  #forum_message_body > .message-content aside,
-  #forum_message_body > .message-content details,
-  #forum_message_body > .message-content figcaption,
-  #forum_message_body > .message-content figure,
-  #forum_message_body > .message-content footer,
-  #forum_message_body > .message-content header,
-  #forum_message_body > .message-content hgroup,
-  #forum_message_body > .message-content menu,
-  #forum_message_body > .message-content nav,
-  #forum_message_body > .message-content section {
+  #forum_message_body > .message-content article, #forum_message_body > .message-content aside, #forum_message_body > .message-content details, #forum_message_body > .message-content figcaption, #forum_message_body > .message-content figure,
+  #forum_message_body > .message-content footer, #forum_message_body > .message-content header, #forum_message_body > .message-content hgroup, #forum_message_body > .message-content menu, #forum_message_body > .message-content nav, #forum_message_body > .message-content section {
     display: block; }
-  #markdownize-popup body,
   #forum_message_body > .message-content body {
     line-height: 1; }
-  #markdownize-popup ol, #markdownize-popup ul,
-  #forum_message_body > .message-content ol,
-  #forum_message_body > .message-content ul {
+  #forum_message_body > .message-content ol, #forum_message_body > .message-content ul {
     list-style: none; }
-  #markdownize-popup blockquote, #markdownize-popup q,
-  #forum_message_body > .message-content blockquote,
-  #forum_message_body > .message-content q {
+  #forum_message_body > .message-content blockquote, #forum_message_body > .message-content q {
     quotes: none; }
-  #markdownize-popup blockquote:before, #markdownize-popup blockquote:after,
-  #markdownize-popup q:before, #markdownize-popup q:after,
-  #forum_message_body > .message-content blockquote:before,
-  #forum_message_body > .message-content blockquote:after,
-  #forum_message_body > .message-content q:before,
-  #forum_message_body > .message-content q:after {
+  #forum_message_body > .message-content blockquote:before, #forum_message_body > .message-content blockquote:after,
+  #forum_message_body > .message-content q:before, #forum_message_body > .message-content q:after {
     content: '';
     content: none; }
-  #markdownize-popup table,
   #forum_message_body > .message-content table {
     border-collapse: collapse;
     border-spacing: 0; }
@@ -177,11 +79,7 @@ $(function() {
 #forum_message_body > div.message-content {
   font-family: Arial, Verdana, メイリオ, Meiryo, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", sans-serif;
   font-size: 13px;
-  margin-bottom: 1em;
-  /* User color: hue: 0 */
-  /* Language color: hue: 90; */
-  /* Meta color: hue: 200 */
-  /* Misc effects */ }
+  margin-bottom: 1em; }
   #forum_message_body > div.message-content pre, #forum_message_body > div.message-content code {
     font-family: monospace, monospace;
     _font-family: 'courier new', monospace;
@@ -317,58 +215,6 @@ $(function() {
     background: #e8f2f9; }
   #forum_message_body > div.message-content tr:hover td {
     background: #abcfe9; }
-  #forum_message_body > div.message-content .hljs {
-    display: block;
-    overflow-x: auto;
-    padding: 0.5em; }
-  #forum_message_body > div.message-content .hljs,
-  #forum_message_body > div.message-content .hljs-subst {
-    color: #444; }
-  #forum_message_body > div.message-content .hljs-comment {
-    color: #888888; }
-  #forum_message_body > div.message-content .hljs-keyword,
-  #forum_message_body > div.message-content .hljs-attribute,
-  #forum_message_body > div.message-content .hljs-selector-tag,
-  #forum_message_body > div.message-content .hljs-meta-keyword,
-  #forum_message_body > div.message-content .hljs-doctag,
-  #forum_message_body > div.message-content .hljs-name {
-    font-weight: bold; }
-  #forum_message_body > div.message-content .hljs-type,
-  #forum_message_body > div.message-content .hljs-string,
-  #forum_message_body > div.message-content .hljs-number,
-  #forum_message_body > div.message-content .hljs-selector-id,
-  #forum_message_body > div.message-content .hljs-selector-class,
-  #forum_message_body > div.message-content .hljs-quote,
-  #forum_message_body > div.message-content .hljs-template-tag,
-  #forum_message_body > div.message-content .hljs-deletion {
-    color: #880000; }
-  #forum_message_body > div.message-content .hljs-title,
-  #forum_message_body > div.message-content .hljs-section {
-    color: #880000;
-    font-weight: bold; }
-  #forum_message_body > div.message-content .hljs-regexp,
-  #forum_message_body > div.message-content .hljs-symbol,
-  #forum_message_body > div.message-content .hljs-variable,
-  #forum_message_body > div.message-content .hljs-template-variable,
-  #forum_message_body > div.message-content .hljs-link,
-  #forum_message_body > div.message-content .hljs-selector-attr,
-  #forum_message_body > div.message-content .hljs-selector-pseudo {
-    color: #BC6060; }
-  #forum_message_body > div.message-content .hljs-literal {
-    color: #78A960; }
-  #forum_message_body > div.message-content .hljs-built_in,
-  #forum_message_body > div.message-content .hljs-bullet,
-  #forum_message_body > div.message-content .hljs-code,
-  #forum_message_body > div.message-content .hljs-addition {
-    color: #397300; }
-  #forum_message_body > div.message-content .hljs-meta {
-    color: #1f7199; }
-  #forum_message_body > div.message-content .hljs-meta-string {
-    color: #4d99bf; }
-  #forum_message_body > div.message-content .hljs-emphasis {
-    font-style: italic; }
-  #forum_message_body > div.message-content .hljs-strong {
-    font-weight: bold; }
 
 .markdownize-ctrl {
   float: right;
@@ -391,6 +237,70 @@ $(function() {
     .markdownize-toggle.markdownize-toggle-off.markdownize-toggle-hover {
       background-color: #e5e5e5;
       color: #737373; }
+
+#forum_message_body > .message-content {
+  /*
+
+  Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+
+  */
+  /* This css is slightly adjusted from original by boarnasia..  */
+  /* User color: hue: 0 */
+  /* Language color: hue: 90; */
+  /* Meta color: hue: 200 */
+  /* Misc effects */ }
+  #forum_message_body > .message-content .hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em; }
+  #forum_message_body > .message-content .hljs,
+  #forum_message_body > .message-content .hljs-subst {
+    color: #444; }
+  #forum_message_body > .message-content .hljs-comment {
+    color: #888888; }
+  #forum_message_body > .message-content .hljs-keyword,
+  #forum_message_body > .message-content .hljs-attribute,
+  #forum_message_body > .message-content .hljs-selector-tag,
+  #forum_message_body > .message-content .hljs-meta-keyword,
+  #forum_message_body > .message-content .hljs-doctag,
+  #forum_message_body > .message-content .hljs-name {
+    font-weight: bold; }
+  #forum_message_body > .message-content .hljs-type,
+  #forum_message_body > .message-content .hljs-string,
+  #forum_message_body > .message-content .hljs-number,
+  #forum_message_body > .message-content .hljs-selector-id,
+  #forum_message_body > .message-content .hljs-selector-class,
+  #forum_message_body > .message-content .hljs-quote,
+  #forum_message_body > .message-content .hljs-template-tag,
+  #forum_message_body > .message-content .hljs-deletion {
+    color: #880000; }
+  #forum_message_body > .message-content .hljs-title,
+  #forum_message_body > .message-content .hljs-section {
+    color: #880000;
+    font-weight: bold; }
+  #forum_message_body > .message-content .hljs-regexp,
+  #forum_message_body > .message-content .hljs-symbol,
+  #forum_message_body > .message-content .hljs-variable,
+  #forum_message_body > .message-content .hljs-template-variable,
+  #forum_message_body > .message-content .hljs-link,
+  #forum_message_body > .message-content .hljs-selector-attr,
+  #forum_message_body > .message-content .hljs-selector-pseudo {
+    color: #BC6060; }
+  #forum_message_body > .message-content .hljs-literal {
+    color: #78A960; }
+  #forum_message_body > .message-content .hljs-built_in,
+  #forum_message_body > .message-content .hljs-bullet,
+  #forum_message_body > .message-content .hljs-code,
+  #forum_message_body > .message-content .hljs-addition {
+    color: #397300; }
+  #forum_message_body > .message-content .hljs-meta {
+    color: #1f7199; }
+  #forum_message_body > .message-content .hljs-meta-string {
+    color: #4d99bf; }
+  #forum_message_body > .message-content .hljs-emphasis {
+    font-style: italic; }
+  #forum_message_body > .message-content .hljs-strong {
+    font-weight: bold; }
 `;
   const css_html = `<style>${theme}</style>`;
 
