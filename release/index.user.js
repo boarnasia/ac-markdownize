@@ -334,9 +334,13 @@ $(function() {
    */
   function markdownize() {
     const ele = $(slct_original);
-    let marked_html = marked(preFilter(ele.text()));
+    const filterd_html = preFilter(ele.text());
+    let marked_html = marked(filterd_html);
     marked_html = $(`<div class="message-content">${css_html}${marked_html}</div>`);
+
     ele.after(marked_html);
+
+    postFilter();
 
     if (store.markdown) {
       ele.hide();
@@ -468,6 +472,31 @@ $(function() {
     }
 
     return filtered_text;
+  }
+
+  /*
+   * マークダウン処理を掛けた後のフィルター処理
+   *
+   *  1. リンクを別窓で開くようする
+   */
+  function postFilter() {
+
+    //  1. リンクを別窓で開くようする
+    {
+      const eles = $("a", slct_marked);
+      for (let idx=0; idx<eles.length; idx++) {
+        const ele = eles[idx];
+
+        if ($(ele).attr("href") !== undefined) {
+          let target = "_blank";
+          if (ele.hostname.match(/(aircamp\.us|bbt757.com)$/)) {
+            // 特定のURLが含まれるケースでは同じページで開くようにする
+            target = "_self";
+          }
+          $(ele).attr("target", target);
+        }
+      }
+    }
   }
 
   // コードハイライトのコールバック関数
