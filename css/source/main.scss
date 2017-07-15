@@ -94,11 +94,9 @@ $color_bg_control: #dbdbdb;
       border-color: #549e4d;
     }
 
-    p:first-child { margin-top: 0; }
-    p:last-child { margin-bottom: 0; }
-    p { margin-bottom: 1em; }
-
+    p { margin: 0; }
   }
+
   hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
 
   em { font-style: italic; }

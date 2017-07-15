@@ -148,12 +148,8 @@ $(function() {
     #forum_message_body > div.message-content blockquote h1, #forum_message_body > div.message-content blockquote h2, #forum_message_body > div.message-content blockquote h3, #forum_message_body > div.message-content blockquote h4, #forum_message_body > div.message-content blockquote h5, #forum_message_body > div.message-content blockquote h6 {
       color: #549e4d;
       border-color: #549e4d; }
-    #forum_message_body > div.message-content blockquote p:first-child {
-      margin-top: 0; }
-    #forum_message_body > div.message-content blockquote p:last-child {
-      margin-bottom: 0; }
     #forum_message_body > div.message-content blockquote p {
-      margin-bottom: 1em; }
+      margin: 0; }
   #forum_message_body > div.message-content hr {
     display: block;
     height: 2px;
