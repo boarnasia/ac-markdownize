@@ -60,10 +60,4 @@ $ npm install
 $ npm run gulp
 ```
 
-更新履歴
---------
-
-* 2017-07-13 Ver 1.0.2
-  * 最初のリリース
-
 [tm]: http://tampermonkey.net/
