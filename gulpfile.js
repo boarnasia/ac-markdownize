@@ -17,10 +17,10 @@ const paths = {
     dest: `${pj_path}/css/build/index.css`,
   },
   js: {
-    src: `${pj_path}/js/source/index.user.js`,
+    src: `${pj_path}/js/source/`,
     dest: `${pj_path}/release/index.user.js`,
     build: {
-      babel: `${pj_path}/js/build-babel/`,
+      babel: `${pj_path}/js/build/babel/`,
     },
     tmStg: `${pj_path}/js/source/tempermonkey-settings.js`,
   }
@@ -32,27 +32,47 @@ gulp.task('scss', cb => {
     .pipe(gulp.dest(path.dirname(paths.css.dest)))
 })
 
-gulp.task('js', cb => {
-
+gulp.task('babel', cb => {
   const css    = fs.readFileSync(paths.css.dest, 'utf8')
+
+  return gulp.src(paths.js.src + '**/*.js')
+    .pipe(inject.replace('{{{css}}}', css))
+    .pipe(babel())
+    .pipe(gulp.dest(paths.js.build.babel))
+})
+
+gulp.task('browserify', cb => {
+
   const tm_stg = fs.readFileSync(paths.js.tmStg, 'utf8')
 
-  return gulp.src(paths.js.src)
-    .pipe(inject.replace('{{{css}}}', css))
+  return gulp.src(path.join(paths.js.build.babel,'index.user.js'))
     .pipe(browserify())
-
-    // browserify が semi-colon を付けてくれないので、それをカバーするために再度babelを通す
-    // semi-colon を付けるオプションが有るといいんだけど。。。
-  // .pipe(babel())
     .pipe(inject.prepend(tm_stg))
-
-    // 不要な行を削除
-    .pipe(deleteLines({
-      filters: [
-        /^"use strict";$/,
-      ]
-    }))
     .pipe(gulp.dest(path.dirname(paths.js.dest)))
+})
+
+gulp.task('js', cb => {
+  sequence('babel', 'browserify', cb)
+
+  // const css    = fs.readFileSync(paths.css.dest, 'utf8')
+  // const tm_stg = fs.readFileSync(paths.js.tmStg, 'utf8')
+
+  // return gulp.src(path.join(paths.js.src,'index.user.js'))
+  //   .pipe(inject.replace('{{{css}}}', css))
+  //   .pipe(browserify())
+
+  //   // browserify が semi-colon を付けてくれないので、それをカバーするために再度babelを通す
+  //   // semi-colon を付けるオプションが有るといいんだけど。。。
+  // // .pipe(babel())
+  //   .pipe(inject.prepend(tm_stg))
+
+  //   // 不要な行を削除
+  //   .pipe(deleteLines({
+  //     filters: [
+  //       /^"use strict";$/,
+  //     ]
+  //   }))
+  //   .pipe(gulp.dest(path.dirname(paths.js.dest)))
 })
 
 gulp.task('clean', cb => {

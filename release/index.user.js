@@ -11,7 +11,9 @@
 // ==/UserScript==
 
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-const markdownize = require('./markdownize')
+"use strict";
+
+var markdownize = require('./markdownize');
 
 // const store = retrieveStore();
 //
@@ -31,298 +33,35 @@ const markdownize = require('./markdownize')
 
 /* テーマ設定
  * テーマは他のデザインと干渉しないように特定の領域以下にだけ適用されるように作ってます。 */
-const theme = `@charset "UTF-8";
-#forum_message_body > .message-content {
-  /* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-  */
-  /* This css is slightly adjusted from original by boarnasia.  */
-  /* HTML5 display-role reset for older browsers */ }
-  #forum_message_body > .message-content html, #forum_message_body > .message-content body, #forum_message_body > .message-content div, #forum_message_body > .message-content span, #forum_message_body > .message-content applet, #forum_message_body > .message-content object, #forum_message_body > .message-content iframe,
-  #forum_message_body > .message-content h1, #forum_message_body > .message-content h2, #forum_message_body > .message-content h3, #forum_message_body > .message-content h4, #forum_message_body > .message-content h5, #forum_message_body > .message-content h6, #forum_message_body > .message-content p, #forum_message_body > .message-content blockquote, #forum_message_body > .message-content pre,
-  #forum_message_body > .message-content a, #forum_message_body > .message-content abbr, #forum_message_body > .message-content acronym, #forum_message_body > .message-content address, #forum_message_body > .message-content big, #forum_message_body > .message-content cite, #forum_message_body > .message-content code,
-  #forum_message_body > .message-content del, #forum_message_body > .message-content dfn, #forum_message_body > .message-content em, #forum_message_body > .message-content img, #forum_message_body > .message-content ins, #forum_message_body > .message-content kbd, #forum_message_body > .message-content q, #forum_message_body > .message-content s, #forum_message_body > .message-content samp,
-  #forum_message_body > .message-content small, #forum_message_body > .message-content strike, #forum_message_body > .message-content strong, #forum_message_body > .message-content sub, #forum_message_body > .message-content sup, #forum_message_body > .message-content tt, #forum_message_body > .message-content var,
-  #forum_message_body > .message-content b, #forum_message_body > .message-content u, #forum_message_body > .message-content i, #forum_message_body > .message-content center,
-  #forum_message_body > .message-content dl, #forum_message_body > .message-content dt, #forum_message_body > .message-content dd, #forum_message_body > .message-content ol, #forum_message_body > .message-content ul, #forum_message_body > .message-content li,
-  #forum_message_body > .message-content fieldset, #forum_message_body > .message-content form, #forum_message_body > .message-content label, #forum_message_body > .message-content legend,
-  #forum_message_body > .message-content table, #forum_message_body > .message-content caption, #forum_message_body > .message-content tbody, #forum_message_body > .message-content tfoot, #forum_message_body > .message-content thead, #forum_message_body > .message-content tr, #forum_message_body > .message-content th, #forum_message_body > .message-content td,
-  #forum_message_body > .message-content article, #forum_message_body > .message-content aside, #forum_message_body > .message-content canvas, #forum_message_body > .message-content details, #forum_message_body > .message-content embed,
-  #forum_message_body > .message-content figure, #forum_message_body > .message-content figcaption, #forum_message_body > .message-content footer, #forum_message_body > .message-content header, #forum_message_body > .message-content hgroup,
-  #forum_message_body > .message-content menu, #forum_message_body > .message-content nav, #forum_message_body > .message-content output, #forum_message_body > .message-content ruby, #forum_message_body > .message-content section, #forum_message_body > .message-content summary,
-  #forum_message_body > .message-content time, #forum_message_body > .message-content mark, #forum_message_body > .message-content audio, #forum_message_body > .message-content video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    float: none; }
-  #forum_message_body > .message-content article, #forum_message_body > .message-content aside, #forum_message_body > .message-content details, #forum_message_body > .message-content figcaption, #forum_message_body > .message-content figure,
-  #forum_message_body > .message-content footer, #forum_message_body > .message-content header, #forum_message_body > .message-content hgroup, #forum_message_body > .message-content menu, #forum_message_body > .message-content nav, #forum_message_body > .message-content section {
-    display: block; }
-  #forum_message_body > .message-content body {
-    line-height: 1; }
-  #forum_message_body > .message-content ol, #forum_message_body > .message-content ul {
-    list-style: none; }
-  #forum_message_body > .message-content blockquote, #forum_message_body > .message-content q {
-    quotes: none; }
-  #forum_message_body > .message-content blockquote:before, #forum_message_body > .message-content blockquote:after,
-  #forum_message_body > .message-content q:before, #forum_message_body > .message-content q:after {
-    content: '';
-    content: none; }
-  #forum_message_body > .message-content table {
-    border-collapse: collapse;
-    border-spacing: 0; }
-
-#forum_message_body > div.message-content {
-  font-family: Arial, Verdana, メイリオ, Meiryo, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", sans-serif;
-  font-size: 13px;
-  margin-bottom: 1em; }
-  #forum_message_body > div.message-content pre, #forum_message_body > div.message-content code {
-    font-family: monospace, monospace;
-    _font-family: 'courier new', monospace;
-    background-color: #e8f2f9;
-    font-size: 0.98em;
-    border-radius: 0.3em; }
-  #forum_message_body > div.message-content pre {
-    white-space: pre;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    border-radius: 1em;
-    padding: 1em;
-    margin: 1em 0; }
-  #forum_message_body > div.message-content h1, #forum_message_body > div.message-content h2, #forum_message_body > div.message-content h3, #forum_message_body > div.message-content h4, #forum_message_body > div.message-content h5, #forum_message_body > div.message-content h6 {
-    font-weight: bold;
-    color: #2a6d9e;
-    line-height: 1.2em;
-    margin-top: 0.5em;
-    margin-bottom: 1em;
-    padding-left: 0.5em; }
-  #forum_message_body > div.message-content h1, #forum_message_body > div.message-content h2 {
-    border-style: solid;
-    border-color: #4792c8;
-    border-width: 0 0 0.2em 0; }
-  #forum_message_body > div.message-content h4, #forum_message_body > div.message-content h5, #forum_message_body > div.message-content h6 {
-    font-weight: bold; }
-  #forum_message_body > div.message-content h1 {
-    font-size: 1.6em; }
-  #forum_message_body > div.message-content h2 {
-    font-size: 1.4em; }
-  #forum_message_body > div.message-content h3 {
-    font-size: 1.2m; }
-  #forum_message_body > div.message-content h4 {
-    font-size: 1em; }
-  #forum_message_body > div.message-content h5 {
-    font-size: 0.95em; }
-  #forum_message_body > div.message-content h6 {
-    font-size: 0.9em; }
-  #forum_message_body > div.message-content a {
-    color: #00c;
-    text-decoration: none;
-    transition: all 0.3s; }
-  #forum_message_body > div.message-content a:visited {
-    color: #00e; }
-  #forum_message_body > div.message-content a:hover {
-    color: #6666ff;
-    text-decoration: underline; }
-  #forum_message_body > div.message-content a:active {
-    color: #faa700; }
-  #forum_message_body > div.message-content a:focus {
-    outline: thin solid;
-    outline-offset: 0.1em;
-    outline-color: #6666ff; }
-  #forum_message_body > div.message-content a:hover, #forum_message_body > div.message-content a:active {
-    outline: 0; }
-  #forum_message_body > div.message-content p {
-    margin: 1em 0; }
-  #forum_message_body > div.message-content img {
-    max-width: 100%; }
-  #forum_message_body > div.message-content blockquote {
-    color: #549e4d;
-    margin: 0;
-    padding: 0.5em;
-    border-left: 0.3em #549e4d solid;
-    background-color: #f1fff0; }
-    #forum_message_body > div.message-content blockquote h1, #forum_message_body > div.message-content blockquote h2, #forum_message_body > div.message-content blockquote h3, #forum_message_body > div.message-content blockquote h4, #forum_message_body > div.message-content blockquote h5, #forum_message_body > div.message-content blockquote h6 {
-      color: #549e4d;
-      border-color: #549e4d; }
-    #forum_message_body > div.message-content blockquote p {
-      margin: 0; }
-  #forum_message_body > div.message-content hr {
-    display: block;
-    height: 2px;
-    border: 0;
-    border-top: 1px solid #aaa;
-    border-bottom: 1px solid #eee;
-    margin: 1em 0;
-    padding: 0; }
-  #forum_message_body > div.message-content em {
-    font-style: italic; }
-  #forum_message_body > div.message-content b, #forum_message_body > div.message-content strong {
-    font-weight: bold; }
-  #forum_message_body > div.message-content sub, #forum_message_body > div.message-content sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline; }
-  #forum_message_body > div.message-content sup {
-    top: -0.5em; }
-  #forum_message_body > div.message-content sub {
-    bottom: -0.25em; }
-  #forum_message_body > div.message-content ul, #forum_message_body > div.message-content ol {
-    margin: 1em 0;
-    padding: 0 0 0 2em; }
-  #forum_message_body > div.message-content li > ul, #forum_message_body > div.message-content li > ol {
-    margin: 0; }
-  #forum_message_body > div.message-content ul li {
-    list-style-type: disc; }
-  #forum_message_body > div.message-content ol li {
-    list-style-type: decimal; }
-  #forum_message_body > div.message-content li p:last-child {
-    margin: 0; }
-  #forum_message_body > div.message-content dd {
-    margin: 0 0 0 2em; }
-  #forum_message_body > div.message-content img {
-    border: 0;
-    -ms-interpolation-mode: bicubic;
-    vertical-align: middle; }
-  #forum_message_body > div.message-content table {
-    padding: 0.5em;
-    min-width: 200px;
-    border-collapse: collapse;
-    border-spacing: 0; }
-  #forum_message_body > div.message-content td, #forum_message_body > div.message-content th {
-    border: 1px solid #e8f2f9;
-    min-height: 1.2em;
-    vertical-align: center;
-    padding: 0.5em 1em;
-    transition: all 0.3s; }
-  #forum_message_body > div.message-content th {
-    background: #83b8de;
-    font-weight: bold;
-    color: #fff; }
-  #forum_message_body > div.message-content td {
-    background: #fff; }
-  #forum_message_body > div.message-content tr:nth-child(odd) td {
-    background: #fff; }
-  #forum_message_body > div.message-content tr:nth-child(even) td {
-    background: #e8f2f9; }
-  #forum_message_body > div.message-content tr:hover td {
-    background: #abcfe9; }
-
-.markdownize-ctrl {
-  float: right;
-  margin-left: 1em; }
-
-.markdownize-toggle {
-  cursor: pointer;
-  padding: 0 0.5em;
-  border-radius: 0.2em;
-  transition: all 0.3s; }
-  .markdownize-toggle.markdownize-toggle-on {
-    background-color: #dbdbdb;
-    color: #000; }
-    .markdownize-toggle.markdownize-toggle-on.markdownize-toggle-hover {
-      background-color: #e5e5e5;
-      color: #737373; }
-  .markdownize-toggle.markdownize-toggle-off {
-    background-color: #eaeaea;
-    color: #999999; }
-    .markdownize-toggle.markdownize-toggle-off.markdownize-toggle-hover {
-      background-color: #e5e5e5;
-      color: #737373; }
-
-#forum_message_body > .message-content {
-  /*
-
-  Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
-
-  */
-  /* This css is slightly adjusted from original by boarnasia..  */
-  /* User color: hue: 0 */
-  /* Language color: hue: 90; */
-  /* Meta color: hue: 200 */
-  /* Misc effects */ }
-  #forum_message_body > .message-content .hljs {
-    display: block;
-    overflow-x: auto;
-    padding: 0.5em; }
-  #forum_message_body > .message-content .hljs,
-  #forum_message_body > .message-content .hljs-subst {
-    color: #444; }
-  #forum_message_body > .message-content .hljs-comment {
-    color: #888888; }
-  #forum_message_body > .message-content .hljs-keyword,
-  #forum_message_body > .message-content .hljs-attribute,
-  #forum_message_body > .message-content .hljs-selector-tag,
-  #forum_message_body > .message-content .hljs-meta-keyword,
-  #forum_message_body > .message-content .hljs-doctag,
-  #forum_message_body > .message-content .hljs-name {
-    font-weight: bold; }
-  #forum_message_body > .message-content .hljs-type,
-  #forum_message_body > .message-content .hljs-string,
-  #forum_message_body > .message-content .hljs-number,
-  #forum_message_body > .message-content .hljs-selector-id,
-  #forum_message_body > .message-content .hljs-selector-class,
-  #forum_message_body > .message-content .hljs-quote,
-  #forum_message_body > .message-content .hljs-template-tag,
-  #forum_message_body > .message-content .hljs-deletion {
-    color: #880000; }
-  #forum_message_body > .message-content .hljs-title,
-  #forum_message_body > .message-content .hljs-section {
-    color: #880000;
-    font-weight: bold; }
-  #forum_message_body > .message-content .hljs-regexp,
-  #forum_message_body > .message-content .hljs-symbol,
-  #forum_message_body > .message-content .hljs-variable,
-  #forum_message_body > .message-content .hljs-template-variable,
-  #forum_message_body > .message-content .hljs-link,
-  #forum_message_body > .message-content .hljs-selector-attr,
-  #forum_message_body > .message-content .hljs-selector-pseudo {
-    color: #BC6060; }
-  #forum_message_body > .message-content .hljs-literal {
-    color: #78A960; }
-  #forum_message_body > .message-content .hljs-built_in,
-  #forum_message_body > .message-content .hljs-bullet,
-  #forum_message_body > .message-content .hljs-code,
-  #forum_message_body > .message-content .hljs-addition {
-    color: #397300; }
-  #forum_message_body > .message-content .hljs-meta {
-    color: #1f7199; }
-  #forum_message_body > .message-content .hljs-meta-string {
-    color: #4d99bf; }
-  #forum_message_body > .message-content .hljs-emphasis {
-    font-style: italic; }
-  #forum_message_body > .message-content .hljs-strong {
-    font-weight: bold; }
-`;
-const css_html = `<style>${theme}</style>`;
+var theme = "@charset \"UTF-8\";\n#forum_message_body > .message-content {\n  /* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n  */\n  /* This css is slightly adjusted from original by boarnasia.  */\n  /* HTML5 display-role reset for older browsers */ }\n  #forum_message_body > .message-content html, #forum_message_body > .message-content body, #forum_message_body > .message-content div, #forum_message_body > .message-content span, #forum_message_body > .message-content applet, #forum_message_body > .message-content object, #forum_message_body > .message-content iframe,\n  #forum_message_body > .message-content h1, #forum_message_body > .message-content h2, #forum_message_body > .message-content h3, #forum_message_body > .message-content h4, #forum_message_body > .message-content h5, #forum_message_body > .message-content h6, #forum_message_body > .message-content p, #forum_message_body > .message-content blockquote, #forum_message_body > .message-content pre,\n  #forum_message_body > .message-content a, #forum_message_body > .message-content abbr, #forum_message_body > .message-content acronym, #forum_message_body > .message-content address, #forum_message_body > .message-content big, #forum_message_body > .message-content cite, #forum_message_body > .message-content code,\n  #forum_message_body > .message-content del, #forum_message_body > .message-content dfn, #forum_message_body > .message-content em, #forum_message_body > .message-content img, #forum_message_body > .message-content ins, #forum_message_body > .message-content kbd, #forum_message_body > .message-content q, #forum_message_body > .message-content s, #forum_message_body > .message-content samp,\n  #forum_message_body > .message-content small, #forum_message_body > .message-content strike, #forum_message_body > .message-content strong, #forum_message_body > .message-content sub, #forum_message_body > .message-content sup, #forum_message_body > .message-content tt, #forum_message_body > .message-content var,\n  #forum_message_body > .message-content b, #forum_message_body > .message-content u, #forum_message_body > .message-content i, #forum_message_body > .message-content center,\n  #forum_message_body > .message-content dl, #forum_message_body > .message-content dt, #forum_message_body > .message-content dd, #forum_message_body > .message-content ol, #forum_message_body > .message-content ul, #forum_message_body > .message-content li,\n  #forum_message_body > .message-content fieldset, #forum_message_body > .message-content form, #forum_message_body > .message-content label, #forum_message_body > .message-content legend,\n  #forum_message_body > .message-content table, #forum_message_body > .message-content caption, #forum_message_body > .message-content tbody, #forum_message_body > .message-content tfoot, #forum_message_body > .message-content thead, #forum_message_body > .message-content tr, #forum_message_body > .message-content th, #forum_message_body > .message-content td,\n  #forum_message_body > .message-content article, #forum_message_body > .message-content aside, #forum_message_body > .message-content canvas, #forum_message_body > .message-content details, #forum_message_body > .message-content embed,\n  #forum_message_body > .message-content figure, #forum_message_body > .message-content figcaption, #forum_message_body > .message-content footer, #forum_message_body > .message-content header, #forum_message_body > .message-content hgroup,\n  #forum_message_body > .message-content menu, #forum_message_body > .message-content nav, #forum_message_body > .message-content output, #forum_message_body > .message-content ruby, #forum_message_body > .message-content section, #forum_message_body > .message-content summary,\n  #forum_message_body > .message-content time, #forum_message_body > .message-content mark, #forum_message_body > .message-content audio, #forum_message_body > .message-content video {\n    margin: 0;\n    padding: 0;\n    border: 0;\n    font-size: 100%;\n    font: inherit;\n    vertical-align: baseline;\n    float: none; }\n  #forum_message_body > .message-content article, #forum_message_body > .message-content aside, #forum_message_body > .message-content details, #forum_message_body > .message-content figcaption, #forum_message_body > .message-content figure,\n  #forum_message_body > .message-content footer, #forum_message_body > .message-content header, #forum_message_body > .message-content hgroup, #forum_message_body > .message-content menu, #forum_message_body > .message-content nav, #forum_message_body > .message-content section {\n    display: block; }\n  #forum_message_body > .message-content body {\n    line-height: 1; }\n  #forum_message_body > .message-content ol, #forum_message_body > .message-content ul {\n    list-style: none; }\n  #forum_message_body > .message-content blockquote, #forum_message_body > .message-content q {\n    quotes: none; }\n  #forum_message_body > .message-content blockquote:before, #forum_message_body > .message-content blockquote:after,\n  #forum_message_body > .message-content q:before, #forum_message_body > .message-content q:after {\n    content: '';\n    content: none; }\n  #forum_message_body > .message-content table {\n    border-collapse: collapse;\n    border-spacing: 0; }\n\n#forum_message_body > div.message-content {\n  font-family: Arial, Verdana, \u30E1\u30A4\u30EA\u30AA, Meiryo, \"\u30D2\u30E9\u30AE\u30CE\u89D2\u30B4 Pro W3\", \"Hiragino Kaku Gothic Pro\", sans-serif;\n  font-size: 13px;\n  margin-bottom: 1em; }\n  #forum_message_body > div.message-content pre, #forum_message_body > div.message-content code {\n    font-family: monospace, monospace;\n    _font-family: 'courier new', monospace;\n    background-color: #e8f2f9;\n    font-size: 0.98em;\n    border-radius: 0.3em; }\n  #forum_message_body > div.message-content pre {\n    white-space: pre;\n    white-space: pre-wrap;\n    word-wrap: break-word;\n    border-radius: 1em;\n    padding: 1em;\n    margin: 1em 0; }\n  #forum_message_body > div.message-content h1, #forum_message_body > div.message-content h2, #forum_message_body > div.message-content h3, #forum_message_body > div.message-content h4, #forum_message_body > div.message-content h5, #forum_message_body > div.message-content h6 {\n    font-weight: bold;\n    color: #2a6d9e;\n    line-height: 1.2em;\n    margin-top: 0.5em;\n    margin-bottom: 1em;\n    padding-left: 0.5em; }\n  #forum_message_body > div.message-content h1, #forum_message_body > div.message-content h2 {\n    border-style: solid;\n    border-color: #4792c8;\n    border-width: 0 0 0.2em 0; }\n  #forum_message_body > div.message-content h4, #forum_message_body > div.message-content h5, #forum_message_body > div.message-content h6 {\n    font-weight: bold; }\n  #forum_message_body > div.message-content h1 {\n    font-size: 1.6em; }\n  #forum_message_body > div.message-content h2 {\n    font-size: 1.4em; }\n  #forum_message_body > div.message-content h3 {\n    font-size: 1.2m; }\n  #forum_message_body > div.message-content h4 {\n    font-size: 1em; }\n  #forum_message_body > div.message-content h5 {\n    font-size: 0.95em; }\n  #forum_message_body > div.message-content h6 {\n    font-size: 0.9em; }\n  #forum_message_body > div.message-content a {\n    color: #00c;\n    text-decoration: none;\n    transition: all 0.3s; }\n  #forum_message_body > div.message-content a:visited {\n    color: #00e; }\n  #forum_message_body > div.message-content a:hover {\n    color: #6666ff;\n    text-decoration: underline; }\n  #forum_message_body > div.message-content a:active {\n    color: #faa700; }\n  #forum_message_body > div.message-content a:focus {\n    outline: thin solid;\n    outline-offset: 0.1em;\n    outline-color: #6666ff; }\n  #forum_message_body > div.message-content a:hover, #forum_message_body > div.message-content a:active {\n    outline: 0; }\n  #forum_message_body > div.message-content p {\n    margin: 1em 0; }\n  #forum_message_body > div.message-content img {\n    max-width: 100%; }\n  #forum_message_body > div.message-content blockquote {\n    color: #549e4d;\n    margin: 0;\n    padding: 0.5em;\n    border-left: 0.3em #549e4d solid;\n    background-color: #f1fff0; }\n    #forum_message_body > div.message-content blockquote h1, #forum_message_body > div.message-content blockquote h2, #forum_message_body > div.message-content blockquote h3, #forum_message_body > div.message-content blockquote h4, #forum_message_body > div.message-content blockquote h5, #forum_message_body > div.message-content blockquote h6 {\n      color: #549e4d;\n      border-color: #549e4d; }\n    #forum_message_body > div.message-content blockquote p {\n      margin: 0; }\n  #forum_message_body > div.message-content hr {\n    display: block;\n    height: 2px;\n    border: 0;\n    border-top: 1px solid #aaa;\n    border-bottom: 1px solid #eee;\n    margin: 1em 0;\n    padding: 0; }\n  #forum_message_body > div.message-content em {\n    font-style: italic; }\n  #forum_message_body > div.message-content b, #forum_message_body > div.message-content strong {\n    font-weight: bold; }\n  #forum_message_body > div.message-content sub, #forum_message_body > div.message-content sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  #forum_message_body > div.message-content sup {\n    top: -0.5em; }\n  #forum_message_body > div.message-content sub {\n    bottom: -0.25em; }\n  #forum_message_body > div.message-content ul, #forum_message_body > div.message-content ol {\n    margin: 1em 0;\n    padding: 0 0 0 2em; }\n  #forum_message_body > div.message-content li > ul, #forum_message_body > div.message-content li > ol {\n    margin: 0; }\n  #forum_message_body > div.message-content ul li {\n    list-style-type: disc; }\n  #forum_message_body > div.message-content ol li {\n    list-style-type: decimal; }\n  #forum_message_body > div.message-content li p:last-child {\n    margin: 0; }\n  #forum_message_body > div.message-content dd {\n    margin: 0 0 0 2em; }\n  #forum_message_body > div.message-content img {\n    border: 0;\n    -ms-interpolation-mode: bicubic;\n    vertical-align: middle; }\n  #forum_message_body > div.message-content table {\n    padding: 0.5em;\n    min-width: 200px;\n    border-collapse: collapse;\n    border-spacing: 0; }\n  #forum_message_body > div.message-content td, #forum_message_body > div.message-content th {\n    border: 1px solid #e8f2f9;\n    min-height: 1.2em;\n    vertical-align: center;\n    padding: 0.5em 1em;\n    transition: all 0.3s; }\n  #forum_message_body > div.message-content th {\n    background: #83b8de;\n    font-weight: bold;\n    color: #fff; }\n  #forum_message_body > div.message-content td {\n    background: #fff; }\n  #forum_message_body > div.message-content tr:nth-child(odd) td {\n    background: #fff; }\n  #forum_message_body > div.message-content tr:nth-child(even) td {\n    background: #e8f2f9; }\n  #forum_message_body > div.message-content tr:hover td {\n    background: #abcfe9; }\n\n.markdownize-ctrl {\n  float: right;\n  margin-left: 1em; }\n\n.markdownize-toggle {\n  cursor: pointer;\n  padding: 0 0.5em;\n  border-radius: 0.2em;\n  transition: all 0.3s; }\n  .markdownize-toggle.markdownize-toggle-on {\n    background-color: #dbdbdb;\n    color: #000; }\n    .markdownize-toggle.markdownize-toggle-on.markdownize-toggle-hover {\n      background-color: #e5e5e5;\n      color: #737373; }\n  .markdownize-toggle.markdownize-toggle-off {\n    background-color: #eaeaea;\n    color: #999999; }\n    .markdownize-toggle.markdownize-toggle-off.markdownize-toggle-hover {\n      background-color: #e5e5e5;\n      color: #737373; }\n\n#forum_message_body > .message-content {\n  /*\n\n  Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>\n\n  */\n  /* This css is slightly adjusted from original by boarnasia..  */\n  /* User color: hue: 0 */\n  /* Language color: hue: 90; */\n  /* Meta color: hue: 200 */\n  /* Misc effects */ }\n  #forum_message_body > .message-content .hljs {\n    display: block;\n    overflow-x: auto;\n    padding: 0.5em; }\n  #forum_message_body > .message-content .hljs,\n  #forum_message_body > .message-content .hljs-subst {\n    color: #444; }\n  #forum_message_body > .message-content .hljs-comment {\n    color: #888888; }\n  #forum_message_body > .message-content .hljs-keyword,\n  #forum_message_body > .message-content .hljs-attribute,\n  #forum_message_body > .message-content .hljs-selector-tag,\n  #forum_message_body > .message-content .hljs-meta-keyword,\n  #forum_message_body > .message-content .hljs-doctag,\n  #forum_message_body > .message-content .hljs-name {\n    font-weight: bold; }\n  #forum_message_body > .message-content .hljs-type,\n  #forum_message_body > .message-content .hljs-string,\n  #forum_message_body > .message-content .hljs-number,\n  #forum_message_body > .message-content .hljs-selector-id,\n  #forum_message_body > .message-content .hljs-selector-class,\n  #forum_message_body > .message-content .hljs-quote,\n  #forum_message_body > .message-content .hljs-template-tag,\n  #forum_message_body > .message-content .hljs-deletion {\n    color: #880000; }\n  #forum_message_body > .message-content .hljs-title,\n  #forum_message_body > .message-content .hljs-section {\n    color: #880000;\n    font-weight: bold; }\n  #forum_message_body > .message-content .hljs-regexp,\n  #forum_message_body > .message-content .hljs-symbol,\n  #forum_message_body > .message-content .hljs-variable,\n  #forum_message_body > .message-content .hljs-template-variable,\n  #forum_message_body > .message-content .hljs-link,\n  #forum_message_body > .message-content .hljs-selector-attr,\n  #forum_message_body > .message-content .hljs-selector-pseudo {\n    color: #BC6060; }\n  #forum_message_body > .message-content .hljs-literal {\n    color: #78A960; }\n  #forum_message_body > .message-content .hljs-built_in,\n  #forum_message_body > .message-content .hljs-bullet,\n  #forum_message_body > .message-content .hljs-code,\n  #forum_message_body > .message-content .hljs-addition {\n    color: #397300; }\n  #forum_message_body > .message-content .hljs-meta {\n    color: #1f7199; }\n  #forum_message_body > .message-content .hljs-meta-string {\n    color: #4d99bf; }\n  #forum_message_body > .message-content .hljs-emphasis {\n    font-style: italic; }\n  #forum_message_body > .message-content .hljs-strong {\n    font-weight: bold; }\n";
+var css_html = "<style>" + theme + "</style>";
 
 /* slct_original が元々のHTML、Markdown 化した HTML は slct_marked 。 */
-const slct_original = "#forum_message_body > pre.message-content";
-const slct_marked = "#forum_message_body > div.message-content";
+var slct_original = "#forum_message_body > pre.message-content";
+var slct_marked = "#forum_message_body > div.message-content";
 
 /* コメント領域の表示切り替えを把握するためのポーリング処理 */
-let timer = 0;        // timer id
-let old_txt = "";     // 変更検知用
-const interval = 300; // インターバル設定（ミリ秒）
-timer = setInterval(function() {
-  const ele = $(slct_original);
-  if (ele.length === 0) { return; }
+var timer = 0; // timer id
+var old_txt = ""; // 変更検知用
+var interval = 300; // インターバル設定（ミリ秒）
+timer = setInterval(function () {
+  var ele = $(slct_original);
+  if (ele.length === 0) {
+    return;
+  }
 
-  const new_txt = $("#forum_message_body > .forum_author").html() + ele.text();
+  var new_txt = $("#forum_message_body > .forum_author").html() + ele.text();
 
   if (old_txt != new_txt) {
-    if ($(slct_marked).length) { return; } // fixme: 多重で呼ばれる時（謎）があるので予防
+    if ($(slct_marked).length) {
+      return;
+    } // fixme: 多重で呼ばれる時（謎）があるので予防
     // markdownize();
     // insertPopupButton();
     // insertMarkdownButton();
 
     old_txt = new_txt;
   }
-
 }, interval);
 
 // /*
@@ -527,62 +266,77 @@ timer = setInterval(function() {
 // function archiveStore(store) {
 //   localStorage.setItem("markdownize", JSON.stringify(store));
 // }
-
 },{"./markdownize":2}],2:[function(require,module,exports){
-const marked = require('marked')
-const store = require('./store')
+'use strict';
 
-class markdownize {
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-exports.default = markdownize
+var marked = require('marked');
+var store = require('./store');
 
+var markdownize = function markdownize() {
+  _classCallCheck(this, markdownize);
+};
+
+exports.default = markdownize;
 },{"./store":3,"marked":4}],3:[function(require,module,exports){
-class store {
+"use strict";
 
-  constructor() {
-    this.state = {}
-    this.store_key = "markdownize"
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    this.load()
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var store = function () {
+  function store() {
+    _classCallCheck(this, store);
+
+    this.state = {};
+    this.store_key = "markdownize";
+
+    this.load();
   }
 
   /*
    * データストアの取得して返す
    */
-  load() {
-    const def = {
-      version: "0.4.5",
-      markdown: true,
-      popup: {
-        size: { width: 800, height: 600 }
-      }
-    };
-
-    const state_string = localStorage.getItem(this.store_key);
-    this.state = store_string !== null ? JSON.parse(store_string) : def;
-
-    // ストアデータの互換性が無くなる時はここに変換処理を差し込む
-
-    return this
-  }
-
-  /*
-   * データストアを保存する
-   */
-  save() {
-    localStorage.setItem(
-      this.store_key,
-      JSON.stringify(this.state)
-    );
-
-    return this
-  }
-}
-
-exports.default = store
 
 
+  _createClass(store, [{
+    key: "load",
+    value: function load() {
+      var def = {
+        version: "0.4.5",
+        markdown: true,
+        popup: {
+          size: { width: 800, height: 600 }
+        }
+      };
+
+      var state_string = localStorage.getItem(this.store_key);
+      this.state = store_string !== null ? JSON.parse(store_string) : def;
+
+      // ストアデータの互換性が無くなる時はここに変換処理を差し込む
+
+      return this;
+    }
+
+    /*
+     * データストアを保存する
+     */
+
+  }, {
+    key: "save",
+    value: function save() {
+      localStorage.setItem(this.store_key, JSON.stringify(this.state));
+
+      return this;
+    }
+  }]);
+
+  return store;
+}();
+
+exports.default = store;
 },{}],4:[function(require,module,exports){
 (function (global){
 /**
