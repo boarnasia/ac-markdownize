@@ -1,12 +1,13 @@
-const gulp       = require('gulp');
-const sass       = require('gulp-sass');
-const del        = require('del');
-const inject     = require('gulp-inject-string');
-const fs         = require('fs')
-const path       = require('path')
-const sequence   = require('run-sequence')
-const browserify = require('gulp-browserify');
-
+const gulp        = require('gulp');
+const sass        = require('gulp-sass');
+const del         = require('del');
+const inject      = require('gulp-inject-string');
+const fs          = require('fs')
+const path        = require('path')
+const sequence    = require('run-sequence')
+const browserify  = require('gulp-browserify');
+const babel       = require("gulp-babel");
+const deleteLines = require('gulp-delete-lines');
 
 const pj_path = __dirname
 
@@ -18,6 +19,9 @@ const paths = {
   js: {
     src: `${pj_path}/js/source/index.user.js`,
     dest: `${pj_path}/release/index.user.js`,
+    build: {
+      babel: `${pj_path}/js/build-babel/`,
+    },
     tmStg: `${pj_path}/js/source/tempermonkey-settings.js`,
   }
 }
@@ -35,8 +39,19 @@ gulp.task('js', cb => {
 
   return gulp.src(paths.js.src)
     .pipe(inject.replace('{{{css}}}', css))
-    .pipe(browserify({}))
+    .pipe(browserify())
+
+    // browserify が semi-colon を付けてくれないので、それをカバーするために再度babelを通す
+    // semi-colon を付けるオプションが有るといいんだけど。。。
+  // .pipe(babel())
     .pipe(inject.prepend(tm_stg))
+
+    // 不要な行を削除
+    .pipe(deleteLines({
+      filters: [
+        /^"use strict";$/,
+      ]
+    }))
     .pipe(gulp.dest(path.dirname(paths.js.dest)))
 })
 
