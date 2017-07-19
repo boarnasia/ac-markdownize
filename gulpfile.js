@@ -1,10 +1,12 @@
-const gulp     = require('gulp');
-const sass     = require('gulp-sass');
-const del      = require('del');
-const inject   = require('gulp-inject-string');
-const fs       = require('fs')
-const path     = require('path')
-const sequence = require('run-sequence')
+const gulp       = require('gulp');
+const sass       = require('gulp-sass');
+const del        = require('del');
+const inject     = require('gulp-inject-string');
+const fs         = require('fs')
+const path       = require('path')
+const sequence   = require('run-sequence')
+const browserify = require('gulp-browserify');
+
 
 const pj_path = __dirname
 
@@ -16,6 +18,7 @@ const paths = {
   js: {
     src: `${pj_path}/js/source/index.user.js`,
     dest: `${pj_path}/release/index.user.js`,
+    tmStg: `${pj_path}/js/source/tempermonkey-settings.js`,
   }
 }
 
@@ -26,10 +29,14 @@ gulp.task('scss', cb => {
 })
 
 gulp.task('js', cb => {
-  const css = fs.readFileSync(paths.css.dest, 'utf8')
+
+  const css    = fs.readFileSync(paths.css.dest, 'utf8')
+  const tm_stg = fs.readFileSync(paths.js.tmStg, 'utf8')
 
   return gulp.src(paths.js.src)
     .pipe(inject.replace('{{{css}}}', css))
+    .pipe(browserify({}))
+    .pipe(inject.prepend(tm_stg))
     .pipe(gulp.dest(path.dirname(paths.js.dest)))
 })
 
