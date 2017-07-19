@@ -282,13 +282,17 @@ exports.default = markdownize;
 },{"./store":3,"marked":4}],3:[function(require,module,exports){
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var store = function () {
-  function store() {
-    _classCallCheck(this, store);
+var Store = function () {
+  function Store() {
+    _classCallCheck(this, Store);
 
     this.state = {};
     this.store_key = "markdownize";
@@ -301,7 +305,7 @@ var store = function () {
    */
 
 
-  _createClass(store, [{
+  _createClass(Store, [{
     key: "load",
     value: function load() {
       var def = {
@@ -313,7 +317,7 @@ var store = function () {
       };
 
       var state_string = localStorage.getItem(this.store_key);
-      this.state = store_string !== null ? JSON.parse(store_string) : def;
+      this.state = state_string !== null ? JSON.parse(state_string) : def;
 
       // ストアデータの互換性が無くなる時はここに変換処理を差し込む
 
@@ -333,10 +337,10 @@ var store = function () {
     }
   }]);
 
-  return store;
+  return Store;
 }();
 
-exports.default = store;
+exports.default = Store;
 },{}],4:[function(require,module,exports){
 (function (global){
 /**

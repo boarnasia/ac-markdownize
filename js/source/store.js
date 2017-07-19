@@ -1,4 +1,4 @@
-class store {
+class Store {
 
   constructor() {
     this.state = {}
@@ -20,7 +20,7 @@ class store {
     };
 
     const state_string = localStorage.getItem(this.store_key);
-    this.state = store_string !== null ? JSON.parse(store_string) : def;
+    this.state = state_string !== null ? JSON.parse(state_string) : def;
 
     // ストアデータの互換性が無くなる時はここに変換処理を差し込む
 
@@ -40,5 +40,5 @@ class store {
   }
 }
 
-exports.default = store
+export default Store
 

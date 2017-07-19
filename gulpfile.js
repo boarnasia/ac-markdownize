@@ -1,13 +1,14 @@
-const gulp        = require('gulp');
-const sass        = require('gulp-sass');
-const del         = require('del');
-const inject      = require('gulp-inject-string');
+const gulp        = require('gulp')
+const sass        = require('gulp-sass')
+const del         = require('del')
+const inject      = require('gulp-inject-string')
 const fs          = require('fs')
 const path        = require('path')
 const sequence    = require('run-sequence')
-const browserify  = require('gulp-browserify');
-const babel       = require("gulp-babel");
-const deleteLines = require('gulp-delete-lines');
+const browserify  = require('gulp-browserify')
+const babel       = require("gulp-babel")
+const deleteLines = require('gulp-delete-lines')
+const jest        = require('gulp-jest').default
 
 const pj_path = __dirname
 
@@ -22,6 +23,8 @@ const paths = {
     build: {
       babel: `${pj_path}/js/build/babel/`,
     },
+    tests: `${pj_path}/js/tests/`,
+    test_env: `${pj_path}/js/tests/localStorage.mock.js`,
     tmStg: `${pj_path}/js/source/tempermonkey-settings.js`,
   }
 }
@@ -53,27 +56,18 @@ gulp.task('browserify', cb => {
 
 gulp.task('js', cb => {
   sequence('babel', 'browserify', cb)
-
-  // const css    = fs.readFileSync(paths.css.dest, 'utf8')
-  // const tm_stg = fs.readFileSync(paths.js.tmStg, 'utf8')
-
-  // return gulp.src(path.join(paths.js.src,'index.user.js'))
-  //   .pipe(inject.replace('{{{css}}}', css))
-  //   .pipe(browserify())
-
-  //   // browserify が semi-colon を付けてくれないので、それをカバーするために再度babelを通す
-  //   // semi-colon を付けるオプションが有るといいんだけど。。。
-  // // .pipe(babel())
-  //   .pipe(inject.prepend(tm_stg))
-
-  //   // 不要な行を削除
-  //   .pipe(deleteLines({
-  //     filters: [
-  //       /^"use strict";$/,
-  //     ]
-  //   }))
-  //   .pipe(gulp.dest(path.dirname(paths.js.dest)))
 })
+
+gulp.task('test', cb => {
+  return gulp.src(paths.js.tests)
+    .pipe(jest({
+      verbose: true,
+      automock: false,
+      browser: true,
+      setupTestFrameworkScriptFile: paths.js.test_env
+    }));
+})
+
 
 gulp.task('clean', cb => {
   del([
