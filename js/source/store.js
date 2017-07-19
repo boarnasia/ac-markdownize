@@ -3,7 +3,6 @@ class Store {
   constructor() {
     this.state = {}
     this.store_key = "markdownize"
-
     this.load()
   }
 

@@ -64,7 +64,9 @@ gulp.task('test', cb => {
       verbose: true,
       automock: false,
       browser: true,
-      setupTestFrameworkScriptFile: paths.js.test_env
+      setupFiles: [
+        "jest-localstorage-mock"
+      ]
     }));
 })
 
