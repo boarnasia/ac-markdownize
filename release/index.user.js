@@ -13,7 +13,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
-var markdownize = require('./markdownize');
+var Markdownize = require('./markdownize');
 
 // const store = retrieveStore();
 //
@@ -240,45 +240,52 @@ timer = setInterval(function () {
 //   return html;
 // }
 //
-// /*
-//  * データストアの取得して返す
-//  */
-// function retrieveStore() {
-//   const def = {
-//     version: "0.4.5",
-//     markdown: true,
-//     popup: {
-//       size: { width: 800, height: 600 }
-//     }
-//   };
-//
-//   // ストアデータの互換性が無くなる時はここに変換処理を差し込む
-//
-//   const store_string = localStorage.getItem("markdownize");
-//   const store = store_string !== null ? JSON.parse(store_string) : def;
-//
-//   return store;
-// }
-//
-// /*
-//  * データストアを保存する
-//  */
-// function archiveStore(store) {
-//   localStorage.setItem("markdownize", JSON.stringify(store));
-// }
 },{"./markdownize":2}],2:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _marked = require('marked');
+
+var _marked2 = _interopRequireDefault(_marked);
+
+var _store = require('./store');
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var marked = require('marked');
-var store = require('./store');
+var store = new _store2.default();
 
-var markdownize = function markdownize() {
-  _classCallCheck(this, markdownize);
+/* markdown の変換オプション
+   詳しくはこちら
+   @see https://github.com/chjj/marked#options-1 */
+_marked2.default.setOptions({
+  gfm: true,
+  tables: true,
+  breaks: true,
+  pedantic: false,
+  sanitize: true,
+  smartLists: false,
+  smartypants: true,
+  highlight: highlight_callback
+});
+
+// コードハイライトのコールバック関数
+function highlight_callback(code, lang, callback) {
+  var html = '<h6>In ' + lang + '</h6>' + hljs.highlight(lang, code, true).value;
+  return html;
+}
+
+var Markdownize = function Markdownize() {
+  _classCallCheck(this, Markdownize);
 };
 
-exports.default = markdownize;
+exports.default = Markdownize;
 },{"./store":3,"marked":4}],3:[function(require,module,exports){
 "use strict";
 
@@ -296,7 +303,6 @@ var Store = function () {
 
     this.state = {};
     this.store_key = "markdownize";
-
     this.load();
   }
 

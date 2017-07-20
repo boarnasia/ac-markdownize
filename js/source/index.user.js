@@ -1,20 +1,4 @@
-const markdownize = require('./markdownize')
-
-// const store = retrieveStore();
-//
-// /* markdown の変換オプション
-//    詳しくはこちら
-//    @see https://github.com/chjj/marked#options-1 */
-// marked.setOptions({
-//   gfm: true,
-//   tables: true,
-//   breaks: true,
-//   pedantic: false,
-//   sanitize: true,
-//   smartLists: false,
-//   smartypants: true,
-//   highlight: hl_cb
-// });
+const Markdownize = require('./markdownize')
 
 /* テーマ設定
  * テーマは他のデザインと干渉しないように特定の領域以下にだけ適用されるように作ってます。 */
@@ -37,7 +21,7 @@ timer = setInterval(function() {
 
   if (old_txt != new_txt) {
     if ($(slct_marked).length) { return; } // fixme: 多重で呼ばれる時（謎）があるので予防
-    // markdownize();
+    // let html = `<div class="message-content">${css}${markdownize()}</div>`
     // insertPopupButton();
     // insertMarkdownButton();
 
@@ -46,26 +30,6 @@ timer = setInterval(function() {
 
 }, interval);
 
-// /*
-//  * マークダウン化処理
-//  */
-// function markdownize() {
-//   const ele = $(slct_original);
-//   const filterd_html = preFilter(ele.text());
-//   let marked_html = marked(filterd_html);
-//   marked_html = $(`<div class="message-content">${css_html}${marked_html}</div>`);
-//
-//   ele.after(marked_html);
-//
-//   postFilter();
-//
-//   if (store.markdown) {
-//     ele.hide();
-//   } else {
-//     marked_html.hide();
-//   }
-// }
-//
 // /*
 //  * ポップアップボタンの追加
 //  */
@@ -143,108 +107,3 @@ timer = setInterval(function() {
 //   ele.after(btn);
 // }
 //
-// /*
-//  * マークダウン処理を掛ける前のフィルター処理
-//  *
-//  *  1. 引用（>）の次の行がnewlineじゃない時はnewlineを挟む
-//  *  2. 引用（>）の継続がparagraphに誤認されるケースを回避
-//  */
-// const lexer = new marked.Lexer();
-// function preFilter(source) {
-//   const lines = source.split("\n");
-//
-//   let previous_context = "(undefined)";
-//   let current_context = "(undefined)";
-//   let filtered_text = "";
-//
-//   for (const idx in lines) {
-//     let line = lines[idx].replace(/\s+$/, "") + "\n";
-//     current_context = "(undefined)";
-//
-//     for (const idx in lexer.rules) {
-//       const rule = lexer.rules[idx];
-//
-//       if (line.match(rule)) {
-//         current_context = idx;
-//         break;
-//       }
-//     }
-//
-//
-//     // フィルター処理
-//
-//     // 1. 引用（>）の次の行がnewlineじゃない時はnewlineを挟む
-//     if (previous_context == "blockquote" && current_context != "newline") {
-//       filtered_text += "\n";
-//     }
-//
-//     // 2. 引用（>）の継続がparagraphに誤認されるケースを回避
-//     if (line.match(/^(\s*>)+\n$/)) {
-//       line = line.replace(/\n$/, "&nbsp;\n");
-//     }
-//
-//     filtered_text += line;
-//
-//     previous_context = current_context;
-//   }
-//
-//   return filtered_text;
-// }
-//
-// /*
-//  * マークダウン処理を掛けた後のフィルター処理
-//  *
-//  *  1. リンクを別窓で開くようする
-//  */
-// function postFilter() {
-//
-//   //  1. リンクを別窓で開くようする
-//   {
-//     const eles = $("a", slct_marked);
-//     for (let idx=0; idx<eles.length; idx++) {
-//       const ele = eles[idx];
-//
-//       if ($(ele).attr("href") !== undefined) {
-//         let target = "_blank";
-//         if (ele.hostname.match(/(aircamp\.us|bbt757.com)$/)) {
-//           // 特定のURLが含まれるケースでは同じページで開くようにする
-//           target = "_self";
-//         }
-//         $(ele).attr("target", target);
-//       }
-//     }
-//   }
-// }
-//
-// // コードハイライトのコールバック関数
-// function hl_cb(code, lang, callback) {
-//   const html = `<h6>In ${lang}</h6>` + hljs.highlight(lang, code, true).value;
-//   return html;
-// }
-//
-// /*
-//  * データストアの取得して返す
-//  */
-// function retrieveStore() {
-//   const def = {
-//     version: "0.4.5",
-//     markdown: true,
-//     popup: {
-//       size: { width: 800, height: 600 }
-//     }
-//   };
-//
-//   // ストアデータの互換性が無くなる時はここに変換処理を差し込む
-//
-//   const store_string = localStorage.getItem("markdownize");
-//   const store = store_string !== null ? JSON.parse(store_string) : def;
-//
-//   return store;
-// }
-//
-// /*
-//  * データストアを保存する
-//  */
-// function archiveStore(store) {
-//   localStorage.setItem("markdownize", JSON.stringify(store));
-// }
