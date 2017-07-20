@@ -1,17 +1,15 @@
-import Marked from 'marked'
-import Store from './store'
 import BlockquoteFilter from './filters/blockquote_filter'
-
-const store = new Store()
+import AnchorFilter from './filters/anchor_filter'
 
 const filters = [
   new BlockquoteFilter(),
+  new AnchorFilter(),
 ]
 
 /* markdown の変換オプション
    詳しくはこちら
    @see https://github.com/chjj/marked#options-1 */
-Marked.setOptions({
+marked.setOptions({
   gfm: true,
   tables: true,
   breaks: true,
@@ -33,46 +31,14 @@ function highlight_callback(code, lang, callback) {
 /*
  * マークダウン化処理
  */
-function markdownize(src, css = '') {
+function markdownize(src) {
   let ret = src
 
   for (let idx in filters) src = filters[i].do(ret, 'pre')
 
-  ret = Marked(ret)
+  ret = marked(ret)
 
   for (let idx in filters) src = filters[i].do(ret, 'post')
-
-  return ret
-}
-
-
-/*
- * マークダウン処理を掛けた後のフィルター処理
- *
- *  1. リンクを別窓で開くようする
- */
-function post_filter(src) {
-  let ret = src
-
-  //  1. リンクを別窓で開くようする
-  {
-    // const src_eles = $(src)
-    // const eles = $("a", src_eles)
-    // for (let idx=0; idx<eles.length; idx++) {
-    //   const ele = eles[idx]
-
-    //   if ($(ele).attr("href") !== undefined) {
-    //     let target = "_blank"
-    //     if (ele.hostname.match(/(aircamp\.us|bbt757.com)$/)) {
-    //       // 特定のURLが含まれるケースでは同じページで開くようにする
-    //       target = "_self"
-    //     }
-    //     $(ele).attr("target", target)
-    //   }
-    // }
-
-    // src = src_eles.html()
-  }
 
   return ret
 }

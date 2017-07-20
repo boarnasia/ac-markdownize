@@ -45,7 +45,6 @@ gulp.task('babel', cb => {
 })
 
 gulp.task('browserify', cb => {
-
   const tm_stg = fs.readFileSync(paths.js.tmStg, 'utf8')
 
   return gulp.src(path.join(paths.js.build.babel,'index.user.js'))

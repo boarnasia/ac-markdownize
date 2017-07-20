@@ -10,7 +10,7 @@ class BaseFilter {
       return this.preprocess(src)
 
     case "post":
-      return this.preprocess(src)
+      return this.postprocess(src)
     }
   }
 

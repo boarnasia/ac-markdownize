@@ -56,13 +56,8 @@ class BlockquoteFilter extends BaseFilter {
       }
 
       if (event === 'outof' && curr_type == 'others') {
-        let last_line = ""
-        let last_type = ""
-        do {
-          last_line = filtered.pop().replace(/&nbsp;$/, '')
-          last_type = this.identify(last_line)
-        } while(last_type != 'bq')
-        filtered.push(last_line)
+        // blockquote の最後の blockquote の空行を削除
+        filtered = this._rid_empty_bq_reversely(filtered)
 
         filtered.push('')
         prev_type = 'newline'
@@ -73,20 +68,26 @@ class BlockquoteFilter extends BaseFilter {
         in_bq = false
 
         // blockquote の最後の blockquote の空行を削除
-        let last_line = ""
-        let last_type = ""
-        do {
-          last_line = filtered.pop().replace(/&nbsp;$/, '')
-          last_type = this.identify(last_line)
-        } while(last_type != 'bq')
-
-        filtered.push(last_line)
+        filtered = this._rid_empty_bq_reversely(filtered)
       }
 
       prev_type = curr_type
       filtered.push(curr_line)
     }
     return filtered.join("\n")
+  }
+
+  _rid_empty_bq_reversely(lines) {
+    let last_line = ""
+    let last_type = ""
+    do {
+      last_line = lines.pop().replace(/&nbsp;$/, '')
+      last_type = this.identify(last_line)
+    } while(last_type != 'bq')
+
+    lines.push(last_line)
+
+    return lines
   }
 
   identify(line) {
