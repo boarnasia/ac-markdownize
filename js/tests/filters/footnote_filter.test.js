@@ -144,3 +144,12 @@ test
 `)
   })
 })
+
+describe('postprocess', () => {
+  test('marker', () => {
+    text = `{{{^1}}}`
+    filtered = filter.do(text, 'post')
+    expect(filtered).toBe(`<sup><a href="#1">^1</a></sup>`)
+  })
+})
+

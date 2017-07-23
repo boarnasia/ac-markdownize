@@ -35,9 +35,12 @@ class AnchorFilter extends BaseFilter {
     super()
 
     this.regex = {
-      marker: /\[(\^[^\]]+)\]/g,
-      footnote: /^\[(\^[^\]]+)\]:\s?(.*)$/,
+      marker: /\[(\^[^\]}]+)\]/g,
+      footnote: /^\[(\^[^\]}]+)\]:\s?(.*)$/,
       others: /^[^\s]+/,
+
+      escaped_marker: /{{{(\^([^}]+))}}}/,
+      escaped_footnote: /{{{ref-\^[^}]+}}}/g,
     }
 
     this.footnotes = {}
@@ -107,10 +110,23 @@ class AnchorFilter extends BaseFilter {
 
     return ret
   }
-  postprocess(src) {
-    let filtered = src
 
-    return filtered
+  postprocess(src) {
+    let ret = src
+
+    console.log('test')
+
+    // marker の処理
+    // let ret = filtered.join("\n")
+    ret = ret.replace(this.regex.marker, (all, g1, g2) => {
+      console.log(all, g1, g2)
+      const id = encodeURI(g2)
+      let ret = `<sup><a href="#${id}">${g1}</a></sup>`
+
+      return ret
+    })
+
+    return ret
   }
 }
 
