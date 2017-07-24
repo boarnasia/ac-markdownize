@@ -142,6 +142,23 @@ test
 test
 `)
   })
+
+  test('blockquote in footnote', () => {
+    text = `
+[^1]: > test
+  > test
+  >
+  > test
+`
+    filtered = filter.do(text, 'pre')
+    expect(filtered).toBe(`
+`)
+    expect(filter.footnotes['^1']).toBe(`> test
+> test
+>
+> test
+`)
+  })
 })
 
 describe('postprocess', () => {

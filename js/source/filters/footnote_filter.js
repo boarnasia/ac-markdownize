@@ -1,4 +1,4 @@
-import marked from 'marked'
+import Markdown from '../markdown'
 import BaseFilter from './base_filter'
 
 /**
@@ -54,23 +54,18 @@ class FootnoteFilter extends BaseFilter {
     let lines = src.split("\n")
     let filtered = []
     let in_fn = false // is it inside of footnote? true || false
-    let event = ""  // into || outof
     let fn_id = ""  // footnote id
     let fn_body = [] // footnote body
-    let fn_first_indent = 0
 
     for (const idx in lines) {
       let line = lines[idx].replace(/\s*$/, "")
       let m = line.match(this.regex.footnote)
-      event = ""
 
       if (m) {
         if (in_fn == true) {
           this.footnotes[fn_id] = fn_body.join("\n")
         }
-        event = "into"
         in_fn = true
-        fn_first_indent = 0
 
         fn_id = m[1]
         fn_body = []
@@ -82,21 +77,12 @@ class FootnoteFilter extends BaseFilter {
 
       } else if (line.match(this.regex.others)) {
         if (in_fn === true) {
-          event = "outof"
           in_fn = false
 
           this.footnotes[fn_id] = fn_body.join("\n")
         }
-      }
-
-      if (event=="" && in_fn) {
-        if (fn_first_indent == 0) {
-          let m2 = line.match(/^(\s+)/)
-          fn_first_indent = m2[1].length
-        }
-
-        const regex = new RegExp("^" + " ".repeat(fn_first_indent))
-        fn_body.push(line.replace(regex, ""))
+      } else if (in_fn) {
+        fn_body.push(line.trim())
         continue
       }
 
@@ -128,9 +114,11 @@ class FootnoteFilter extends BaseFilter {
 
     // footnote の処理
     let fns = []
+    const markdown = new Markdown()
     for (const key in this.footnotes) {
       const id = encodeURI(key)
-      let content = marked(this.footnotes[key]).replace(/\s*$/, "")
+      console.log(key, this.footnotes[key])
+      let content = markdown.do(this.footnotes[key]).replace(/\s*$/, "")
       content = `<li id="fn-${id}"><sup><span class="marker">${key}</span></sup>${content}</li>`
 
       fns.push(content)

@@ -1,28 +1,5 @@
-import marked from 'marked'
+import Markdown from './markdown'
 import Store from './store'
-import BlockquoteFilter from './filters/blockquote_filter'
-import AnchorFilter from './filters/anchor_filter'
-import FootnoteFilter from './filters/footnote_filter'
-
-const filters = [
-  new BlockquoteFilter(),
-  new AnchorFilter(),
-  new FootnoteFilter(),
-]
-
-/* markdown の変換オプション
-   詳しくはこちら
-   @see https://github.com/chjj/marked#options-1 */
-marked.setOptions({
-  gfm: true,
-  tables: true,
-  breaks: true,
-  pedantic: false,
-  sanitize: true,
-  smartLists: false,
-  smartypants: true,
-  highlight: highlight_callback
-})
 
 // コードハイライトのコールバック関数
 function highlight_callback(code, lang, callback) {
@@ -33,6 +10,7 @@ function highlight_callback(code, lang, callback) {
 }
 
 const store = new Store()
+const markdown = new Markdown()
 
 /* テーマ設定
  * テーマは他のデザインと干渉しないように特定の領域以下にだけ適用されるように作ってます。 */
@@ -72,11 +50,7 @@ function markdownize() {
   const ele = $(slct_original);
   let ret = ele.text()
 
-  for (let idx in filters) ret = filters[idx].do(ret, 'pre')
-
-  ret = marked(ret)
-
-  for (let idx in filters) ret = filters[idx].do(ret, 'post')
+  ret = markdown.do(ret)
 
   let marked_html = $(`<div class="message-content">${css_html}${ret}</div>`)
 
