@@ -1,14 +1,6 @@
 import Markdown from './markdown'
 import Store from './store'
 
-// コードハイライトのコールバック関数
-function highlight_callback(code, lang, callback) {
-  const html = `<h6>In ${lang}</h6>`
-    + hljs.highlight(lang, code, true).value
-
-  return html
-}
-
 const store = new Store()
 const markdown = new Markdown()
 

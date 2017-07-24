@@ -26,7 +26,7 @@ BBT大学とBBT大学院の AirCampus の投稿欄にマークダウンを綺麗
 
 ### blockquote 周りの違い
 
-こういったblockquoteがあった場合
+こういった blockquote があった場合
 ```
 >
 > > test
@@ -35,7 +35,7 @@ BBT大学とBBT大学院の AirCampus の投稿欄にマークダウンを綺麗
 test
 ```
 
-こういうmarkdownであったかのように振る舞うようにしています
+こういう markdown であるかのように振る舞うようにしています
 ```
 > > test
 >
@@ -44,15 +44,15 @@ test
 test
 ```
 
-何故かと言うと、こんな感じ。
+何故かと言うとこんな感じ。
 ```
 > ← blockquote の最初の空行は blockquote として解釈されないので見苦しい
 > > test
 > ← blockquote のレベルが変わった際に空行がないと
->   継続業も前のレベルに吸収されるため分かりづらい
+>   継続行が前のレベルに吸収されるため分かりづらい
 > test
 > ← 同じくblockquoteが終わっても空行がないと
-    継続業も前のレベルに吸収されるため分かりづらい
+    継続行が前のレベルに吸収されるため分かりづらい
 test
 ```
 
@@ -63,7 +63,7 @@ test
 ![example footnote](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/example-footnote.png)
 
 
-記法は [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/#footnotes) を同じような感じになるようにしています。
+記法は [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/#footnotes) と同じような感じになるようにしています。
 
 インストール方法
 ----------------
@@ -101,6 +101,7 @@ $ cd ${working dir}
 $ git clone git@github.com:boarnasia/ac-markdownize.git
 $ cd ac-markdownize
 $ npm install
+$ npm run gulp -- test
 $ npm run gulp
 ```
 
