@@ -21,6 +21,50 @@ BBT大学とBBT大学院の AirCampus の投稿欄にマークダウンを綺麗
 
 ![Example 2](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/example2.png)
 
+拡張 Markdown 記法
+------------------
+
+### blockquote 周りの違い
+
+こういったblockquoteがあった場合
+```
+>
+> > test
+> test
+>
+test
+```
+
+こういうmarkdownであったかのように振る舞うようにしています
+```
+> > test
+>
+> test
+
+test
+```
+
+何故かと言うと、こんな感じ。
+```
+> ← blockquote の最初の空行は blockquote として解釈されないので見苦しい
+> > test
+> ← blockquote のレベルが変わった際に空行がないと
+>   継続業も前のレベルに吸収されるため分かりづらい
+> test
+> ← 同じくblockquoteが終わっても空行がないと
+    継続業も前のレベルに吸収されるため分かりづらい
+test
+```
+
+### footnote 記法の追加
+
+こんな記法が出来るようにしてます
+
+![example footnote](https://github.com/boarnasia/ac-markdownize/raw/master/release/images/example-footnote.png)
+
+
+記法は [PHP Markdown Extra](https://michelf.ca/projects/php-markdown/extra/#footnotes) を同じような感じになるようにしています。
+
 インストール方法
 ----------------
 

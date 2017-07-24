@@ -1,10 +1,13 @@
+import marked from 'marked'
 import Store from './store'
 import BlockquoteFilter from './filters/blockquote_filter'
 import AnchorFilter from './filters/anchor_filter'
+import FootnoteFilter from './filters/footnote_filter'
 
 const filters = [
   new BlockquoteFilter(),
   new AnchorFilter(),
+  new FootnoteFilter(),
 ]
 
 /* markdown の変換オプション

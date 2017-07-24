@@ -1,7 +1,6 @@
 'use strict'
 
-import Marked from 'marked'
-import FootnoteFIlter
+import FootnoteFilter
   from '../../source/filters/footnote_filter'
 
 let text = ""
@@ -11,7 +10,7 @@ let filter = null
 beforeEach(() => {
   text = ""
   filtered = ""
-  filter = new FootnoteFIlter()
+  filter = new FootnoteFilter()
 })
 
 describe('preprocess', () => {
@@ -46,16 +45,16 @@ describe('preprocess', () => {
   test('footnote', () => {
     text = `[^1]: test`
     filtered = filter.do(text, 'pre')
-    expect(filtered).toBe(`{{{ref-^1}}}`)
+    expect(filtered).toBe(``)
     expect(filter.footnotes['^1']).toBe(`test`)
 
     text = `[^1]: test
 [^2]: test
 [^3]: test`
     filtered = filter.do(text, 'pre')
-    expect(filtered).toBe(`{{{ref-^1}}}
-{{{ref-^2}}}
-{{{ref-^3}}}`)
+    expect(filtered).toBe(`
+
+`)
     expect(filter.footnotes['^1']).toBe(`test`)
     expect(filter.footnotes['^2']).toBe(`test`)
     expect(filter.footnotes['^3']).toBe(`test`)
@@ -67,7 +66,7 @@ describe('preprocess', () => {
 `
     filtered = filter.do(text, 'pre')
     expect(filtered).toBe(`
-{{{ref-^1}}}`)
+`)
     expect(filter.footnotes['^1']).toBe(`test
 test
 test
@@ -86,9 +85,9 @@ test
 `
     filtered = filter.do(text, 'pre')
     expect(filtered).toBe(`
-{{{ref-^1}}}
-{{{ref-^2}}}
-{{{ref-^3}}}`)
+
+
+`)
     expect(filter.footnotes['^1']).toBe(`test
 test
 test`)
@@ -114,12 +113,12 @@ test
   test
 
 [^あ]: test
-  test
-  test
+    test
+    test
 
-  > test
+    > test
 
-  test
+    test
 `
     filtered = filter.do(text, 'pre')
     expect(filtered).toBe(`
@@ -127,9 +126,9 @@ test
 
 とんでもなく天気が良いのだ。{{{^あ}}}
 
-{{{ref-^1}}}
-{{{ref-^999}}}
-{{{ref-^あ}}}`)
+
+
+`)
     expect(filter.footnotes['^1']).toBe(`test`)
     expect(filter.footnotes['^999']).toBe(`test
 test
@@ -149,7 +148,26 @@ describe('postprocess', () => {
   test('marker', () => {
     text = `{{{^1}}}`
     filtered = filter.do(text, 'post')
-    expect(filtered).toBe(`<sup><a href="#1">^1</a></sup>`)
+    expect(filtered).toBe(`<sup>^1</sup>`)
+  })
+
+  test('long marker', () => {
+    text = `{{{^昨日の記述}}}`
+    filtered = filter.do(text, 'post')
+    expect(filtered).toBe(`<sup>^昨日の記述</sup>`)
+  })
+
+  test('footnote', () => {
+    text = ``
+
+    filter.footnotes['^1'] = "test"
+    filtered = filter.do(text, 'post')
+    expect(filtered).toBe(`<div class="footnote">
+<hr />
+<ol>
+  <li id="fn-%5E1"><sup><span class="marker">^1</span></sup><p>test</p></li>
+</ol>
+</div>`)
   })
 })
 

@@ -141,6 +141,22 @@ $color_bg_control: #dbdbdb;
   tr:nth-child(odd) td { background: $color_bg; }
   tr:nth-child(even) td { background: $color_primary_slight; }
   tr:hover td { background: darken($color_primary_slight, 15%); }
+
+  div.footnote {
+    li {
+      list-style: none;
+    }
+
+    sup {
+      line-height: inherit;
+      position: inherit;
+    }
+
+    span.marker {
+      position: absolute;
+      left: 1.5em;
+    }
+  }
 }
 
 .markdownize-ctrl {

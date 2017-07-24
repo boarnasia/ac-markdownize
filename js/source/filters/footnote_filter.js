@@ -1,3 +1,4 @@
+import marked from 'marked'
 import BaseFilter from './base_filter'
 
 /**
@@ -30,7 +31,7 @@ import BaseFilter from './base_filter'
  * @see https://michelf.ca/projects/php-markdown/extra/#footnotes
  */
 
-class AnchorFilter extends BaseFilter {
+class FootnoteFilter extends BaseFilter {
   constructor() {
     super()
 
@@ -39,14 +40,16 @@ class AnchorFilter extends BaseFilter {
       footnote: /^\[(\^[^\]}]+)\]:\s?(.*)$/,
       others: /^[^\s]+/,
 
-      escaped_marker: /{{{(\^([^}]+))}}}/,
-      escaped_footnote: /{{{ref-\^[^}]+}}}/g,
+      escaped_marker: /{{{(\^[^}]+)}}}/g,
+      escaped_footnote: /{{{fn-(\^[^}]+)}}}/g,
     }
 
     this.footnotes = {}
   }
 
   preprocess(src) {
+    this.footnotes = {}
+
     // footnote の処理
     let lines = src.split("\n")
     let filtered = []
@@ -75,7 +78,7 @@ class AnchorFilter extends BaseFilter {
 
         line = line.replace(
           this.regex.footnote,
-          "{{{ref-" + m[1] + "}}}")
+          "")
 
       } else if (line.match(this.regex.others)) {
         if (in_fn === true) {
@@ -114,21 +117,37 @@ class AnchorFilter extends BaseFilter {
   postprocess(src) {
     let ret = src
 
-    console.log('test')
-
     // marker の処理
-    // let ret = filtered.join("\n")
-    ret = ret.replace(this.regex.marker, (all, g1, g2) => {
-      console.log(all, g1, g2)
-      const id = encodeURI(g2)
-      let ret = `<sup><a href="#${id}">${g1}</a></sup>`
+    ret = ret.replace(this.regex.escaped_marker, (all, g1) => {
+      const id = encodeURI(g1)
+      // let ret = `<sup><a href="#fn-${id}">${g1}</a></sup>`
+      let ret = `<sup>${g1}</sup>`
 
       return ret
     })
+
+    // footnote の処理
+    let fns = []
+    for (const key in this.footnotes) {
+      const id = encodeURI(key)
+      let content = marked(this.footnotes[key]).replace(/\s*$/, "")
+      content = `<li id="fn-${id}"><sup><span class="marker">${key}</span></sup>${content}</li>`
+
+      fns.push(content)
+    }
+
+    if (fns.length) {
+      ret += `<div class="footnote">
+<hr />
+<ol>
+  ${fns.join("\n")}
+</ol>
+</div>`
+    }
 
     return ret
   }
 }
 
-export default AnchorFilter
+export default FootnoteFilter
 
