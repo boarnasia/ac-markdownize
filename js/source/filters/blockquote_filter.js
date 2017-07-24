@@ -2,101 +2,100 @@ import BaseFilter from './base_filter'
 
 class BlockquoteFilter extends BaseFilter {
 
-  constructor() {
-    super()
-
-    this.regex = {
-      empty_bq: /^(\s*>)+$/,
-      bq: /^(\s*>)+.+$/,
-      newline: /^$/,
-    }
-  }
-
   preprocess(src) {
-    const lines   = src.split('\n')
-    let in_bq     = false
-    let filtered  = new Array()
-    let curr_line = ""
-    let curr_type = ""
-    let prev_type = ""
-    let event     = "" // into | outof | ""
+    let ret = []
+
+    const lines = src.split('\n')
+
+    let line = ""
+    let prev = {
+        level: 0,
+        hasText: false,
+        inEmptyLine: false,
+        isNewline: false,
+    }
+    let curr_level = 0
+    let hasText = false
+    let isNewline = false
+    let inEmptyLine = false
 
     for (const idx in lines) {
-      curr_line = lines[idx].trim();
-      curr_type = this.identify(curr_line)
-      event = ""
+      line = lines[idx].replace(/\s*$/, '')
 
-      if (in_bq === false) {
+      hasText = this._blockquote_has_text(line)
+      isNewline = this._is_newline(line)
+      curr_level = this._blockquote_level(line)
 
-        // blockquote の始めの blockquote の空行を削除
-        if (curr_type === 'empty_bq') continue
+      if (curr_level > 0) {
 
-        // それ以外の時
-        // blockquote が開始する
-        if (curr_type === 'bq') {
-          in_bq = true
-          event = 'into'
+        if (hasText) {
+          inEmptyLine = false
+
+          if (curr_level < prev.level && prev.hasText == true) {
+            ret.push("> ".repeat(curr_level).replace(/\s*$/, ''))
+          }
+        }
+        else {
+          if (prev.level === 0) {
+            continue
+          } else if (inEmptyLine === false) {
+            inEmptyLine = true
+          } else { continue }
         }
 
-      } else if (in_bq === true) {
+      } else if (curr_level == 0 && prev.level > 0) {
 
-        // blockquote内の多重の空行は1行にまとめる
-        if (prev_type == 'empty_bq' && curr_type == 'empty_bq')
-          continue
+        if (prev.inEmptyLine) {
+          ret.pop()
+        }
 
-        // blockquote内の空行がparagraphに誤認されるのを防ぐ
-        else if (curr_type == 'empty_bq')
-          curr_line += '&nbsp;'
-
-        // blockquote が終わる
-        if (curr_type === 'others' || curr_type === 'newline') {
-          in_bq = false
-          event = 'outof'
+        if (isNewline === false) {
+          inEmptyLine = false
+          ret.push("")
         }
       }
 
-      if (event === 'outof' && curr_type == 'others') {
-        // blockquote の最後の blockquote の空行を削除
-        filtered = this._rid_empty_bq_reversely(filtered)
-
-        filtered.push('')
-        prev_type = 'newline'
-        event === ''
+      ret.push(line)
+      prev = {
+        level: curr_level,
+        hasText: hasText,
+        inEmptyLine: inEmptyLine,
+        isNewline: isNewline,
       }
-
-      if (event === 'outof' && curr_type == 'newline') {
-        in_bq = false
-
-        // blockquote の最後の blockquote の空行を削除
-        filtered = this._rid_empty_bq_reversely(filtered)
-      }
-
-      prev_type = curr_type
-      filtered.push(curr_line)
     }
-    return filtered.join("\n")
+
+    ret = ret
+      .join('\n')
+
+    return ret
   }
 
-  _rid_empty_bq_reversely(lines) {
-    let last_line = ""
-    let last_type = ""
-    do {
-      last_line = lines.pop().replace(/&nbsp;$/, '')
-      last_type = this.identify(last_line)
-    } while(last_type != 'bq')
+  _is_newline(line) {
+    let m = line.match(/^$/)
 
-    lines.push(last_line)
-
-    return lines
+    return (m ? true : false)
   }
 
-  identify(line) {
-    let type = 'others'
+  _blockquote_has_text(line) {
+    let m = line.match(/^(\s*>)+\s*([^\s>]+)/)
 
-    for (const i in this.regex)
-      if (line.match(this.regex[i])) return i
+    return (m ? true : false)
+  }
 
-    return type
+  _blockquote_level(line) {
+    let ret = 0
+    let m = line.match(/^(\s*>)+/)
+
+    if (m) {
+      while(m) {
+        ret++
+
+        line = line.replace(/^\s*>/, '')
+        m = line.match(/^(\s*>)+/)
+      }
+    }
+
+    return ret
   }
 }
 

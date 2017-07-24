@@ -48,8 +48,6 @@ test
 
 
     text = `
->
-> >
 > > test
 > >
 >
@@ -76,7 +74,7 @@ test
 
     expect(filtered).toBe(`
 > test
->&nbsp;
+>
 > test
 `)
 
@@ -94,7 +92,7 @@ test
 
     expect(filtered).toBe(`
 > > test
-> >&nbsp;
+> >
 > > test
 `)
 
@@ -135,6 +133,29 @@ test
 test
 `)
 
+  })
+
+  test('insert newline when level down', () => {
+
+    text = `
+# test
+
+> > test
+> test
+>
+test
+`
+    filtered = filter.do(text, 'pre')
+
+    expect(filtered).toBe(`
+# test
+
+> > test
+>
+> test
+
+test
+`)
   })
 
 })

@@ -38,7 +38,7 @@ $color_bg_control: #dbdbdb;
 
   h1,h2,h3,h4,h5,h6{
     font-weight:bold;
-    color:#2a6d9e;
+    color:$color_primary;
     line-height:1.2em;
     margin-top: 0.5em;
     margin-bottom: 1em;
@@ -46,16 +46,13 @@ $color_bg_control: #dbdbdb;
   }
   h1, h2 {
     border-style: solid;
-    border-color: #4792c8;
-    border-width: 0 0 0.2em 0;
+    border-color: $color_primary_light;
+    border-width: 0 0 0.05em 0;
   }
-  h4,h5,h6{ font-weight: bold; }
-  h1{ font-size:1.6em; }
-  h2{ font-size:1.4em; }
-  h3{ font-size:1.2m; }
-  h4{ font-size:1em; }
-  h5{ font-size:0.95em; }
-  h6{ font-size:0.9em; }
+  h1{ font-size:1.1em; }
+  h2{ font-size:1.05em; }
+  h3{ font-size:1em; }
+  h4, h5, h6 { font-size:1em; font-weight: normal; }
 
   a {
     color: $color_fg_link;
@@ -94,7 +91,8 @@ $color_bg_control: #dbdbdb;
       border-color: #549e4d;
     }
 
-    p { margin: 0; }
+    p { margin: 0 0 1em 0; }
+    p:last-child { margin: 0 0 0 0; }
   }
 
   hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
