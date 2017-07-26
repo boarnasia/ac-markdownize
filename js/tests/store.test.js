@@ -1,6 +1,6 @@
 'use strict'
 
-import Store from '../source/store.js'
+import Store from '../source/store'
 
 let store = undefined
 

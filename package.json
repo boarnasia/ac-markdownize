@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "jest": "jest"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
