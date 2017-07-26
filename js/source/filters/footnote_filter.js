@@ -117,7 +117,6 @@ class FootnoteFilter extends BaseFilter {
     const markdown = new Markdown()
     for (const key in this.footnotes) {
       const id = encodeURI(key)
-      console.log(key, this.footnotes[key])
       let content = markdown.do(this.footnotes[key]).replace(/\s*$/, "")
       content = `<li id="fn-${id}"><sup><span class="marker">${key}</span></sup>${content}</li>`
 
