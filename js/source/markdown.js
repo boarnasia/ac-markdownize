@@ -6,8 +6,16 @@ import FootnoteFilter from './filters/footnote_filter'
 
 // コードハイライトのコールバック関数
 function highlight_callback(code, lang, callback) {
-  const html = `<h6>In ${lang}</h6>`
-    + hljs.highlight(lang, code, true).value
+  // lang が不明のまま highlightjs を呼び出すとエラーになるので、
+  // 不明の時は auto detection 付きの方で処理をする
+  // また、auto detection を掛けた時、検出結果がマイナー言語になりがちなので言語名は表示しないことにした
+  let html = ""
+  if (lang === undefined) {
+    html = hljs.highlightAuto(code).value
+  } else {
+    html = `<h6>In ${lang}</h6>` +
+      hljs.highlight(lang, code, true).value
+  }
 
   return html
 }

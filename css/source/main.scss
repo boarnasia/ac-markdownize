@@ -108,7 +108,7 @@ $color_bg_control: #dbdbdb;
   li > ul, li > ol { margin: 0; }
   ul > li { list-style-type: disc; }
   ol > li { list-style-type: decimal; }
-  li p:last-child { margin:0 }
+  li:last-child > p:last-child { margin:0 }
   dd { margin: 0 0 0 2em; }
 
   img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
